@@ -1,8 +1,8 @@
 <h1 align="center">📊 Excel to Salesforce CSV Converter</h1>
 
 <p align="center">
-Aplicação desktop desenvolvida para automatizar a preparação de dados para importação no Salesforce.
-O sistema transforma planilhas Excel em arquivos CSV estruturados, aplicando regras de negócio, validações e vínculos entre objetos como Account, Contract e Asset.
+Ferramenta desktop desenvolvida para transformar planilhas Excel em arquivos CSV prontos para importação no Salesforce,
+aplicando automaticamente regras de negócio, vínculos entre objetos e ajustes necessários para evitar erros no Data Loader.
 </p>
 
 <p align="center">
@@ -19,30 +19,29 @@ O sistema transforma planilhas Excel em arquivos CSV estruturados, aplicando reg
 <tr>
 <td width="50%" valign="top" style="border: none; padding: 15px;">
 
-### 📥 IMPORTAÇÃO DE PLANILHA
+### 📥 LEITURA DE PLANILHA
 
 <ul>
-<li>Leitura de arquivos Excel (.xlsx / .xls)</li>
-<li>Identificação automática das abas:</li>
+<li>Importação de arquivos Excel (.xlsx / .xls)</li>
+<li>Detecção automática das abas necessárias:</li>
 <ul>
 <li>Account</li>
 <li>Contract</li>
 <li>Ativo (Asset)</li>
 </ul>
-<li>Validação estrutural antes do processamento</li>
+<li>Validação de estrutura antes do processamento</li>
 </ul>
 
 </td>
 
 <td width="50%" valign="top" style="border: none; padding: 15px;">
 
-### 🧠 REGRAS DE NEGÓCIO
+### 🔗 VINCULAÇÃO AUTOMÁTICA
 
 <ul>
-<li>Vinculação automática entre objetos via AccountId</li>
-<li>Normalização de dados (CPF, datas, textos)</li>
-<li>Aplicação de valores fixos obrigatórios</li>
-<li>Garantia de consistência entre registros</li>
+<li>Relacionamento automático entre objetos</li>
+<li>Distribuição dos Account IDs informados</li>
+<li>Garantia de consistência entre os dados</li>
 </ul>
 
 </td>
@@ -54,58 +53,27 @@ O sistema transforma planilhas Excel em arquivos CSV estruturados, aplicando reg
 ### 🔄 TRANSFORMAÇÃO DE DADOS
 
 <ul>
-<li>Conversão de datas para padrão Salesforce (YYYY-MM-DD)</li>
-<li>Renomeação automática de campos problemáticos</li>
-<li>Tratamento de colunas bloqueadas para update</li>
-<li>Padronização de campos como Email e CPF</li>
+<li>Conversão de datas para padrão Salesforce</li>
+<li>Padronização de CPF</li>
+<li>Renomeação automática de campos</li>
+<li>Correção de inconsistências comuns</li>
 </ul>
 
 </td>
 
 <td width="50%" valign="top" style="border: none; padding: 15px;">
 
-### 📊 GERAÇÃO DE CSV
+### 📊 EXPORTAÇÃO
 
 <ul>
-<li>Geração automática de 3 arquivos:</li>
+<li>Geração automática de:</li>
 <ul>
 <li>Account.csv</li>
 <li>Contract.csv</li>
 <li>Asset.csv</li>
 </ul>
-<li>Codificação UTF-8 (compatível com Salesforce)</li>
-<li>Arquivos prontos para importação via Data Loader</li>
-</ul>
-
-</td>
-</tr>
-
-<tr>
-<td width="50%" valign="top" style="border: none; padding: 15px;">
-
-### 🔍 GERAÇÃO DE SOQL
-
-<ul>
-<li>Extração automática de CPFs da planilha</li>
-<li>Remoção de formatação e normalização</li>
-<li>Geração de query pronta:</li>
-<ul>
-<li>SELECT Id, Name, CPF__pc FROM Account</li>
-</ul>
-<li>Resultado copiado direto para área de transferência</li>
-</ul>
-
-</td>
-
-<td width="50%" valign="top" style="border: none; padding: 15px;">
-
-### 🖥️ INTERFACE
-
-<ul>
-<li>Interface simples e direta (Tkinter)</li>
-<li>Contador automático de IDs</li>
-<li>Botões dinâmicos para copiar CSVs</li>
-<li>Status visual de processamento</li>
+<li>Arquivos prontos para Data Loader</li>
+<li>Codificação UTF-8</li>
 </ul>
 
 </td>
@@ -114,77 +82,143 @@ O sistema transforma planilhas Excel em arquivos CSV estruturados, aplicando reg
 
 ---
 
-## ⚙️ Regras de Negócio Aplicadas
+## ⚙️ Regras de Negócio
 
-### 🔗 Vinculação entre objetos
-
-<ul>
-<li>Todos os registros são vinculados via <b>AccountId</b></li>
-<li>Os IDs informados são distribuídos automaticamente entre:</li>
-<ul>
-<li>Account</li>
-<li>Contract</li>
-<li>Asset</li>
-</ul>
-</ul>
-
----
-
-### 🧾 Account
+### 🧾 ACCOUNT
 
 <ul>
-<li>Recebe os IDs informados manualmente</li>
-<li>Campo <b>CPF__pc</b> normalizado (11 dígitos)</li>
-<li>Email padronizado para <b>Email__c</b></li>
-<li>Campo fixo:</li>
+<li>Campo <b>Id</b> é preenchido com os Account IDs informados</li>
+
+<li>Campo <b>Email</b> é automaticamente renomeado para <b>Email__c</b></li>
+
+<li>Campo <b>CPF__pc</b>:</li>
 <ul>
-<li>RecordTypeId = 0125A0000013RxeQAE</li>
-<li>AreaNegocio__c = Leves</li>
-</ul>
-<li>Operação esperada: <b>UPSERT via CPF__pc</b></li>
+<li>Remove espaços</li>
+<li>Remove formatação (não numéricos)</li>
+<li>Garante 11 dígitos (padding com zero à esquerda)</li>
 </ul>
 
----
-
-### 📄 Contract
-
+<li>Campo <b>RecordTypeId</b> fixo:</li>
 <ul>
-<li>Vinculado automaticamente via <b>AccountId</b></li>
-<li>Campos padrão definidos:</li>
-<ul>
-<li>Status = Draft</li>
-<li>IRIS_Categoria_Contrato__c = 2</li>
-<li>RecordTypeId = 012U6000000OTnFIAW</li>
+<li>0125A0000013RxeQAE</li>
 </ul>
-<li>Datas convertidas automaticamente</li>
-<li>Flags obrigatórias definidas como TRUE</li>
-<li>Operação esperada: <b>INSERT</b></li>
+
+<li>Campo <b>AreaNegocio__c</b>:</li>
+<ul>
+<li>Definido como "Leves" quando existir na planilha</li>
+</ul>
+
+<li>Operação esperada:</li>
+<ul>
+<li><b>UPSERT via CPF__pc</b></li>
+</ul>
+
 </ul>
 
 ---
 
-### 🚗 Asset
+### 📄 CONTRACT
 
 <ul>
-<li>Vinculado automaticamente via <b>AccountId</b></li>
-<li>Conversão automática de datas</li>
-<li>Mapeamento de RecordType aplicado</li>
-<li>RecordTypeId fixo:</li>
+<li>Campo <b>AccountId</b> vinculado automaticamente aos IDs informados</li>
+
+<li>Campo <b>Status</b> fixado como:</li>
+<ul>
+<li>Draft</li>
+</ul>
+
+<li>Campo <b>IRIS_Categoria_Contrato__c</b>:</li>
+<ul>
+<li>Valor fixo: 2</li>
+</ul>
+
+<li>Campos de data:</li>
+<ul>
+<li>Convertidos para formato <b>YYYY-MM-DD</b></li>
+</ul>
+
+<li>Campos booleanos específicos:</li>
+<ul>
+<li>IRIS_CapturaReservaPrimeiraParcela__c = TRUE</li>
+<li>IRIS_ReservaPrimeiraParcela__c = TRUE</li>
+</ul>
+
+<li>Campo <b>RecordTypeId</b> fixo:</li>
+<ul>
+<li>012U6000000OTnFIAW</li>
+</ul>
+
+<li>Operação esperada:</li>
+<ul>
+<li><b>INSERT</b></li>
+</ul>
+
+</ul>
+
+---
+
+### 🚗 ASSET
+
+<ul>
+<li>Campo <b>AccountId</b> vinculado automaticamente aos IDs informados</li>
+
+<li>Campos de data:</li>
+<ul>
+<li>Convertidos para formato <b>YYYY-MM-DD</b></li>
+</ul>
+
+<li>Campo <b>RecordType.Name</b>:</li>
+<ul>
+<li>Convertido automaticamente para <b>RecordTypeId</b></li>
+</ul>
+
+<li>Campo <b>RecordTypeId</b> fixo:</li>
 <ul>
 <li>012HY0000004NyFYAU</li>
 </ul>
-<li>Operação esperada: <b>UPSERT via chave externa (ex: Placa__c)</b></li>
+
+<li>Operação esperada:</li>
+<ul>
+<li><b>UPSERT via chave externa (ex: Placa__c)</b></li>
+</ul>
+
 </ul>
 
 ---
 
-### 🔧 Ajustes técnicos automáticos
+### 🔧 RENOMEAÇÕES AUTOMÁTICAS
+
+Alguns campos são renomeados automaticamente para evitar conflitos ou bloqueios de atualização no Salesforce:
 
 <ul>
-<li>Renomeação de campos que bloqueiam atualização (prefixo "_")</li>
-<li>Correção de inconsistências de dados</li>
-<li>Validação de quantidade de registros vs IDs</li>
-<li>Remoção automática de CSVs antigos antes de novo processamento</li>
+<li>ContractNumber → _ContractNumber</li>
+<li>Account.Name → _Account.Name</li>
+<li>IDExternoAX__c → _IDExternoAX__c</li>
+<li>EndDate → _EndDate</li>
+<li>RecordType.DeveloperName → _RecordType.DeveloperName</li>
+<li>IRIS_Codigo_Status_do_Tanque__c → _IRIS_Codigo_Status_do_Tanque__c</li>
+<li>IRIS_Codigo_Situacao_do_Agendamento__c → _IRIS_Codigo_Situacao_do_Agendamento__c</li>
+</ul>
+
+---
+
+## 🔍 Geração de SOQL
+
+<ul>
+<li>Extrai automaticamente CPFs da planilha</li>
+<li>Remove formatação e padroniza valores</li>
+<li>Gera query pronta:</li>
+</ul>
+
+<pre>
+SELECT Id, Name, CPF__pc
+FROM Account
+WHERE CPF__pc IN (...)
+ORDER BY Name
+</pre>
+
+<ul>
+<li>Resultado copiado automaticamente para a área de transferência</li>
 </ul>
 
 ---
@@ -192,10 +226,10 @@ O sistema transforma planilhas Excel em arquivos CSV estruturados, aplicando reg
 ## 🚀 Como usar
 
 1. Insira os Account IDs (um por linha)  
-2. Clique em **Anexar Arquivo**  
-3. (Opcional) Clique em **Gerar SOQL por CPF**  
-4. Clique em **Processar e Salvar CSV**  
-5. Utilize os botões para copiar os CSVs  
+2. Clique em <b>Anexar Arquivo</b>  
+3. (Opcional) Clique em <b>Gerar SOQL por CPF</b>  
+4. Clique em <b>Processar e Salvar CSV</b>  
+5. Utilize os botões para copiar os arquivos  
 
 ---
 
@@ -218,5 +252,5 @@ O sistema transforma planilhas Excel em arquivos CSV estruturados, aplicando reg
 ---
 
 <p align="center">
-Automatizando processos que normalmente seriam feitos manualmente no Excel
+Automatizando processos de importação que normalmente seriam manuais no Salesforce
 </p>
