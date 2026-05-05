@@ -30,7 +30,7 @@ aplicando automaticamente regras de negócio, vínculos entre objetos e ajustes 
 <li>Ativo (Asset)</li>
 </ul>
 <li>Validação de estrutura antes do processamento</li>
-</ul>
+</ul><br>
 
 </td>
 
@@ -73,7 +73,7 @@ aplicando automaticamente regras de negócio, vínculos entre objetos e ajustes 
 <li>Asset.csv</li>
 </ul>
 <li>Arquivos prontos para Data Loader</li>
-<li>Codificação UTF-8</li>
+<li>Codificação UTF-8</li><br>
 </ul>
 
 </td>
