@@ -233,14 +233,6 @@ ORDER BY Name
 
 ---
 
-## 📸 Preview
-
-<p align="center">
-  <img width="500" src="https://via.placeholder.com/500x300?text=Preview+do+Sistema" />
-</p>
-
----
-
 ## 📥 Download
 
 <p align="center">
