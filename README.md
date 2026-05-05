@@ -1,4 +1,4 @@
-<h1 align="center">📊 Excel to Salesforce CSV Converter</h1>
+<h1 align="center">📊 Salesforce XLSX Data Import</h1>
 
 <p align="center">
 Ferramenta desktop desenvolvida para transformar planilhas Excel em arquivos CSV prontos para importação no Salesforce,
@@ -252,5 +252,5 @@ ORDER BY Name
 ---
 
 <p align="center">
-Automatizando processos de importação que normalmente seriam manuais no Salesforce
+Automatizando processos de importação que normalmente seriam manuais no Salesforce ☁️
 </p>
