@@ -1,7 +1,8 @@
-<h1 align="center">📄 Excel → Salesforce CSV Converter</h1>
+<h1 align="center">📊 Excel to Salesforce CSV Converter</h1>
 
 <p align="center">
-Ferramenta para transformar planilhas Excel em arquivos CSV prontos para importação no Salesforce (Account, Contract e Asset).
+Aplicação desktop desenvolvida para automatizar a preparação de dados para importação no Salesforce.
+O sistema transforma planilhas Excel em arquivos CSV estruturados, aplicando regras de negócio, validações e vínculos entre objetos como Account, Contract e Asset.
 </p>
 
 <p align="center">
@@ -10,192 +11,212 @@ Ferramenta para transformar planilhas Excel em arquivos CSV prontos para importa
   <img src="https://img.shields.io/badge/Interface-Tkinter-lightgrey">
 </p>
 
-<h2>📌 Sobre</h2>
+---
 
-<p>
-Este aplicativo foi desenvolvido para automatizar a preparação de dados para importação no Salesforce, eliminando a necessidade de tratamento manual em planilhas.
-</p>
+## ✨ Funcionalidades
 
-<p>
-A ferramenta lê um arquivo Excel estruturado, aplica regras de negócio específicas e gera automaticamente três arquivos CSV:
-</p>
+<table style="border: none; border-collapse: collapse;">
+<tr>
+<td width="50%" valign="top" style="border: none; padding: 15px;">
 
-<ul>
-  <li><b>Account.csv</b></li>
-  <li><b>Contract.csv</b></li>
-  <li><b>Asset.csv</b></li>
-</ul>
-
-<p>
-Esses arquivos já saem prontos para uso em processos de <b>UPSERT</b> e <b>INSERT</b> dentro do Salesforce.
-</p>
-
-<h2>⚙️ Como funciona</h2>
-
-<p>
-O fluxo da aplicação é baseado em dois inputs principais:
-</p>
+### 📥 IMPORTAÇÃO DE PLANILHA
 
 <ul>
-  <li>Uma lista de <b>Account IDs</b> (colados manualmente)</li>
-  <li>Um arquivo Excel contendo as abas de dados</li>
+<li>Leitura de arquivos Excel (.xlsx / .xls)</li>
+<li>Identificação automática das abas:</li>
+<ul>
+<li>Account</li>
+<li>Contract</li>
+<li>Ativo (Asset)</li>
+</ul>
+<li>Validação estrutural antes do processamento</li>
 </ul>
 
-<p>
-A partir disso, o sistema faz o cruzamento das informações e gera os arquivos finais já estruturados.
-</p>
+</td>
 
-<h2>📂 Estrutura esperada do Excel</h2>
+<td width="50%" valign="top" style="border: none; padding: 15px;">
 
-<p>O arquivo precisa conter três abas:</p>
+### 🧠 REGRAS DE NEGÓCIO
 
 <ul>
-  <li><b>Account</b> (ou similar)</li>
-  <li><b>Contract</b> (ou similar)</li>
-  <li><b>Ativo</b> (Asset)</li>
+<li>Vinculação automática entre objetos via AccountId</li>
+<li>Normalização de dados (CPF, datas, textos)</li>
+<li>Aplicação de valores fixos obrigatórios</li>
+<li>Garantia de consistência entre registros</li>
 </ul>
 
-<p>
-A identificação é feita automaticamente pelo nome da aba (case insensitive).
-</p>
+</td>
+</tr>
 
-<h2>🔗 Regra principal de vínculo</h2>
+<tr>
+<td width="50%" valign="top" style="border: none; padding: 15px;">
 
-<p>
-O relacionamento entre os dados é feito através da lista de <b>Account IDs</b> informada pelo usuário.
-</p>
+### 🔄 TRANSFORMAÇÃO DE DADOS
 
 <ul>
-  <li>Cada linha do Excel é associada a um Account ID correspondente</li>
-  <li>A quantidade de IDs deve ser igual à quantidade de registros em cada aba</li>
-  <li>Se houver divergência, o processamento é interrompido</li>
+<li>Conversão de datas para padrão Salesforce (YYYY-MM-DD)</li>
+<li>Renomeação automática de campos problemáticos</li>
+<li>Tratamento de colunas bloqueadas para update</li>
+<li>Padronização de campos como Email e CPF</li>
 </ul>
 
-<h2>🧠 Regras de negócio aplicadas</h2>
+</td>
 
-<h3>📌 ACCOUNT</h3>
+<td width="50%" valign="top" style="border: none; padding: 15px;">
+
+### 📊 GERAÇÃO DE CSV
 
 <ul>
-  <li>Campo <b>Id</b> é preenchido com os Account IDs informados</li>
-  <li>Campo <b>Email</b> é automaticamente renomeado para <b>Email__c</b></li>
-  <li>Campo <b>CPF__pc</b>:
-    <ul>
-      <li>Remove espaços</li>
-      <li>Garante 11 dígitos (padding com zero à esquerda)</li>
-    </ul>
-  </li>
-  <li><b>RecordTypeId</b> fixo: 0125A0000013RxeQAE</li>
-  <li><b>AreaNegocio__c</b> fixado como "Leves" (quando existente)</li>
+<li>Geração automática de 3 arquivos:</li>
+<ul>
+<li>Account.csv</li>
+<li>Contract.csv</li>
+<li>Asset.csv</li>
+</ul>
+<li>Codificação UTF-8 (compatível com Salesforce)</li>
+<li>Arquivos prontos para importação via Data Loader</li>
 </ul>
 
-<h3>📌 CONTRACT</h3>
+</td>
+</tr>
+
+<tr>
+<td width="50%" valign="top" style="border: none; padding: 15px;">
+
+### 🔍 GERAÇÃO DE SOQL
 
 <ul>
-  <li>Campo <b>AccountId</b> vinculado aos IDs informados</li>
-  <li>Campo <b>Status</b> fixado como <b>Draft</b></li>
-  <li><b>IRIS_Categoria_Contrato__c</b> fixo: 2</li>
-  <li>Campos de data são convertidos para formato <b>YYYY-MM-DD</b></li>
-  <li>Campos booleanos específicos são forçados como <b>TRUE</b></li>
-  <li><b>RecordTypeId</b> fixo: 012U6000000OTnFIAW</li>
+<li>Extração automática de CPFs da planilha</li>
+<li>Remoção de formatação e normalização</li>
+<li>Geração de query pronta:</li>
+<ul>
+<li>SELECT Id, Name, CPF__pc FROM Account</li>
+</ul>
+<li>Resultado copiado direto para área de transferência</li>
 </ul>
 
-<h3>📌 ASSET</h3>
+</td>
+
+<td width="50%" valign="top" style="border: none; padding: 15px;">
+
+### 🖥️ INTERFACE
 
 <ul>
-  <li>Campo <b>AccountId</b> vinculado aos IDs informados</li>
-  <li>Campos de data também convertidos para <b>YYYY-MM-DD</b></li>
-  <li>Campo <b>RecordType.Name</b> é convertido para <b>RecordTypeId</b></li>
-  <li><b>RecordTypeId</b> fixo: 012HY0000004NyFYAU</li>
+<li>Interface simples e direta (Tkinter)</li>
+<li>Contador automático de IDs</li>
+<li>Botões dinâmicos para copiar CSVs</li>
+<li>Status visual de processamento</li>
 </ul>
 
-<h3>🔄 RENOMEAÇÕES AUTOMÁTICAS</h3>
+</td>
+</tr>
+</table>
 
-<p>
-Alguns campos são renomeados automaticamente para evitar conflitos ou bloqueios de atualização:
-</p>
+---
+
+## ⚙️ Regras de Negócio Aplicadas
+
+### 🔗 Vinculação entre objetos
 
 <ul>
-  <li>ContractNumber → _ContractNumber</li>
-  <li>Account.Name → _Account.Name</li>
-  <li>IDExternoAX__c → _IDExternoAX__c</li>
-  <li>EndDate → _EndDate</li>
-  <li>RecordType.DeveloperName → _RecordType.DeveloperName</li>
+<li>Todos os registros são vinculados via <b>AccountId</b></li>
+<li>Os IDs informados são distribuídos automaticamente entre:</li>
+<ul>
+<li>Account</li>
+<li>Contract</li>
+<li>Asset</li>
+</ul>
 </ul>
 
-<p>
-Campos específicos do IRIS também são renomeados para evitar falhas no processo de importação.
-</p>
+---
 
-<h2>📊 Geração de SOQL</h2>
-
-<p>
-A ferramenta possui um recurso auxiliar que gera automaticamente uma query SOQL baseada nos CPFs presentes no Excel.
-</p>
-
-<p>
-A query é copiada diretamente para a área de transferência, pronta para uso no Salesforce.
-</p>
-
-<h2>🚀 Como usar</h2>
-
-<ol>
-  <li>Cole os <b>Account IDs</b> (um por linha)</li>
-  <li>Clique em <b>Anexar Arquivo</b> e selecione o Excel</li>
-  <li>(Opcional) Gere a SOQL por CPF</li>
-  <li>Clique em <b>Processar e Salvar CSV</b></li>
-  <li>Copie os CSVs gerados diretamente pelo botão</li>
-</ol>
-
-<h2>🎯 O que isso resolve</h2>
+### 🧾 Account
 
 <ul>
-  <li>Elimina ajustes manuais em planilhas</li>
-  <li>Garante consistência de dados para importação</li>
-  <li>Evita erros de formatação e relacionamento</li>
-  <li>Automatiza regras de negócio repetitivas</li>
-  <li>Agiliza processos de carga no Salesforce</li>
+<li>Recebe os IDs informados manualmente</li>
+<li>Campo <b>CPF__pc</b> normalizado (11 dígitos)</li>
+<li>Email padronizado para <b>Email__c</b></li>
+<li>Campo fixo:</li>
+<ul>
+<li>RecordTypeId = 0125A0000013RxeQAE</li>
+<li>AreaNegocio__c = Leves</li>
+</ul>
+<li>Operação esperada: <b>UPSERT via CPF__pc</b></li>
 </ul>
 
-<h2>⚠️ Validações</h2>
+---
+
+### 📄 Contract
 
 <ul>
-  <li>Arquivo Excel obrigatório</li>
-  <li>Abas obrigatórias (Account, Contract, Ativo)</li>
-  <li>Quantidade de IDs deve bater com registros</li>
-  <li>Colunas obrigatórias devem existir</li>
+<li>Vinculado automaticamente via <b>AccountId</b></li>
+<li>Campos padrão definidos:</li>
+<ul>
+<li>Status = Draft</li>
+<li>IRIS_Categoria_Contrato__c = 2</li>
+<li>RecordTypeId = 012U6000000OTnFIAW</li>
+</ul>
+<li>Datas convertidas automaticamente</li>
+<li>Flags obrigatórias definidas como TRUE</li>
+<li>Operação esperada: <b>INSERT</b></li>
 </ul>
 
-<h2>🖥️ Interface</h2>
+---
+
+### 🚗 Asset
 
 <ul>
-  <li>Campo para inserção de Account IDs</li>
-  <li>Contador automático de IDs</li>
-  <li>Botão de anexar Excel</li>
-  <li>Geração de SOQL por CPF</li>
-  <li>Botão de processamento</li>
-  <li>Acesso rápido aos CSVs gerados</li>
+<li>Vinculado automaticamente via <b>AccountId</b></li>
+<li>Conversão automática de datas</li>
+<li>Mapeamento de RecordType aplicado</li>
+<li>RecordTypeId fixo:</li>
+<ul>
+<li>012HY0000004NyFYAU</li>
+</ul>
+<li>Operação esperada: <b>UPSERT via chave externa (ex: Placa__c)</b></li>
 </ul>
 
-<h2>🛠️ Tecnologias</h2>
+---
+
+### 🔧 Ajustes técnicos automáticos
 
 <ul>
-  <li>Python</li>
-  <li>pandas</li>
-  <li>tkinter</li>
+<li>Renomeação de campos que bloqueiam atualização (prefixo "_")</li>
+<li>Correção de inconsistências de dados</li>
+<li>Validação de quantidade de registros vs IDs</li>
+<li>Remoção automática de CSVs antigos antes de novo processamento</li>
 </ul>
 
-<h2>📥 Output</h2>
+---
 
-<p>
-Os arquivos são gerados na mesma pasta do Excel:
-</p>
+## 🚀 Como usar
 
-<ul>
-  <li>Account.csv (UPSERT via CPF__pc)</li>
-  <li>Contract.csv (INSERT)</li>
-  <li>Asset.csv (UPSERT via Placa__c)</li>
-</ul>
+1. Insira os Account IDs (um por linha)  
+2. Clique em **Anexar Arquivo**  
+3. (Opcional) Clique em **Gerar SOQL por CPF**  
+4. Clique em **Processar e Salvar CSV**  
+5. Utilize os botões para copiar os CSVs  
+
+---
+
+## 📸 Preview
 
 <p align="center">
-Ferramenta feita para eliminar retrabalho em importações no Salesforce
+  <img width="500" src="https://via.placeholder.com/500x300?text=Preview+do+Sistema" />
+</p>
+
+---
+
+## 📥 Download
+
+<p align="center">
+  <a href="#">
+    <img src="https://img.shields.io/badge/Download-CSV%20Converter-blue?style=for-the-badge">
+  </a>
+</p>
+
+---
+
+<p align="center">
+Automatizando processos que normalmente seriam feitos manualmente no Excel
 </p>
