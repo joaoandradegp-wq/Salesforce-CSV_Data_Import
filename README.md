@@ -244,5 +244,5 @@ ORDER BY Name
 ---
 
 <p align="center">
-Automatizando processos de importação que normalmente seriam manuais no Salesforce ☁️
+Automatizando processos de importação que normalmente seriam manuais no Salesforce. ☁️
 </p>
