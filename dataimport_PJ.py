@@ -191,170 +191,330 @@ def processar_planilha():
                 )
                 return
 
-
         mapa_renomeacao = {
             "ContractNumber": "_ContractNumber",
             "Account.Name": "_Account.Name",
             "IDExternoAX__c": "_IDExternoAX__c",
             "EndDate": "_EndDate",
             "RecordType.DeveloperName": "_RecordType.DeveloperName",
-            # INSERIDO ABAIXO POR CAUSA DESTES CAMPOS TRAVAREM A ATUALIZAÇÃO, PORÉM VIA UPDATE POSTERIOR SE RESOLVE.
             "IRIS_Codigo_Status_do_Tanque__c": "_IRIS_Codigo_Status_do_Tanque__c",
             "IRIS_Codigo_Situacao_do_Agendamento__c": "_IRIS_Codigo_Situacao_do_Agendamento__c"
-            
         }
 
         # ================= ACCOUNT =================
         df_account = pd.read_excel(
-            xls, sheet_name=[s for s in xls.sheet_names if "account" in s.lower()][0]
+            xls,
+            sheet_name=[s for s in xls.sheet_names if "account" in s.lower()][0]
         )
 
         df_account["Id"] = ids
         df_account["Id"] = df_account["Id"].astype(str)
 
-
         df_account.rename(
-            columns=lambda c: "Email__c" if isinstance(c, str) and c.strip().lower() == "email" else c,
+            columns=lambda c:
+            "Email__c"
+            if isinstance(c, str)
+            and c.strip().lower() == "email"
+            else c,
             inplace=True
         )
-        
+
         if len(df_account) != len(ids):
             messagebox.showerror(
-            "Erro",
-            "Quantidade de Account IDs diferente da quantidade de registros da aba Account."
+                "Erro",
+                "Quantidade de Account IDs diferente da quantidade de registros da aba Account."
             )
             return
 
-
         if "CPF__pc" in df_account.columns:
             df_account["CPF__pc"] = df_account["CPF__pc"].astype(str).str.strip()
+
             df_account["CPF__pc"] = df_account["CPF__pc"].apply(
                 lambda x: ("0" + x) if len(x) == 13 else x
             )
 
         df_account["RecordTypeId"] = "0125A0000013RibQAE"
 
-        # Sistemicamente, tanto FLEET quanto LIVRE, esse campo vem como 'Leves'  
         if "AreaNegocio__c" in df_account.columns:
             df_account["AreaNegocio__c"] = "Leves"
 
         df_account.rename(columns=mapa_renomeacao, inplace=True)
 
         # ================= CONTRACT =================
+
         df_contract = pd.read_excel(
-            xls, sheet_name=[s for s in xls.sheet_names if "contract" in s.lower()][0]
+            xls,
+            sheet_name=[s for s in xls.sheet_names if "contract" in s.lower()][0]
         )
 
-        df_contract["AccountId"] = ids
-        df_contract.drop(columns=["Id"], inplace=True, errors="ignore")
-        df_contract = df_contract[["AccountId"] + [c for c in df_contract.columns if c != "AccountId"]]
+        df_contract.drop(
+            columns=["Id"],
+            inplace=True,
+            errors="ignore"
+        )
 
-        df_contract["AccountId"] = df_contract["AccountId"].astype(str)
+        # NOVA REGRA PJ:
+        # 1 Account -> N Contracts
+
+        if len(ids) == 1:
+            df_contract["AccountId"] = ids[0]
+
+        else:
+            df_contract["AccountId"] = (
+                ids *
+                (
+                    len(df_contract)
+                    //
+                    len(ids)
+                    + 1
+                )
+            )[:len(df_contract)]
+
+        df_contract = df_contract[
+            ["AccountId"]
+            +
+            [
+                c
+                for c in df_contract.columns
+                if c != "AccountId"
+            ]
+        ]
+
+        df_contract["AccountId"] = (
+            df_contract["AccountId"]
+            .astype(str)
+        )
 
         # REGRA: Status sempre Draft
         df_contract["Status"] = "Draft"
 
         df_contract["IRIS_Categoria_Contrato__c"] = "2"
 
-        if len(df_contract) != len(ids):
-            messagebox.showerror(
-            "Erro",
-            "Quantidade de Account IDs diferente da quantidade de registros da aba Contract."
-            )
-            return
-
         for col in df_contract.columns:
             if "date" in col.lower() or "data" in col.lower():
+
                 df_contract[col] = pd.to_datetime(
-                    df_contract[col], errors="coerce"
+                    df_contract[col],
+                    errors="coerce"
                 ).dt.strftime("%Y-%m-%d")
 
-        # REGRA: ContractTerm 0 precisa alterar para vazio
         if "ContractTerm" in df_contract.columns:
-            df_contract["ContractTerm"] = df_contract["ContractTerm"].replace([0, "0"], "")
+            df_contract["ContractTerm"] = (
+                df_contract["ContractTerm"]
+                .replace([0, "0"], "")
+            )
 
         for campo in [
             "IRIS_CapturaReservaPrimeiraParcela__c",
             "IRIS_ReservaPrimeiraParcela__c"
         ]:
+
             if campo in df_contract.columns:
                 df_contract[campo] = "false"
 
         df_contract["RecordTypeId"] = "012U6000009ru5eIAA"
 
-        df_contract.rename(columns=mapa_renomeacao, inplace=True)
-
-        # ================= ASSET =================
-        df_asset = pd.read_excel(
-            xls, sheet_name=[s for s in xls.sheet_names if "ativo" in s.lower()][0]
+        df_contract.rename(
+            columns=mapa_renomeacao,
+            inplace=True
         )
 
-        df_asset.drop(columns=["Id"], inplace=True, errors="ignore")
+        # ================= ASSET =================
 
-        # NOVA LÓGICA:
-        # Se tiver apenas 1 ID → todos os veículos recebem esse ID
-        # Se tiver vários IDs → distribui proporcionalmente (ou você pode adaptar depois)
+        df_asset = pd.read_excel(
+            xls,
+            sheet_name=[s for s in xls.sheet_names if "ativo" in s.lower()][0]
+        )
+
+        df_asset.drop(
+            columns=["Id"],
+            inplace=True,
+            errors="ignore"
+        )
 
         if len(ids) == 1:
+
             df_asset["AccountId"] = ids[0]
+
         else:
-            # Repete os IDs para casar com a quantidade de veículos
-            df_asset["AccountId"] = (ids * (len(df_asset) // len(ids) + 1))[:len(df_asset)]
 
-        df_asset = df_asset[["AccountId"] + [c for c in df_asset.columns if c != "AccountId"]]
+            df_asset["AccountId"] = (
+                ids *
+                (
+                    len(df_asset)
+                    //
+                    len(ids)
+                    + 1
+                )
+            )[:len(df_asset)]
 
-        df_asset["AccountId"] = df_asset["AccountId"].astype(str)
+        df_asset["AccountId"] = (
+            df_asset["AccountId"]
+            .astype(str)
+        )
 
-        # REMOVIDO:
-        # if len(df_asset) != len(ids):
+        # RELAÇÃO CONTRATO X ASSET
+
+        campo_asset = (
+            "IRIS_Contrato__r."
+            "IRIS_CodigoContratoMasterLocavia__c"
+        )
+
+        campo_contract = (
+            "IRIS_CodigoContratoMasterLocavia__c"
+        )
+
+        if (
+            campo_asset in df_asset.columns
+            and
+            campo_contract in df_contract.columns
+        ):
+
+            df_asset[campo_asset] = (
+                df_asset[campo_asset]
+                .astype(str)
+                .str.strip()
+            )
+
+            df_contract[campo_contract] = (
+                df_contract[campo_contract]
+                .astype(str)
+                .str.strip()
+            )
+
+            contratos_asset = set(
+                df_asset[campo_asset]
+                .dropna()
+            )
+
+            contratos_contract = set(
+                df_contract[campo_contract]
+                .dropna()
+            )
+
+            faltantes = (
+                contratos_asset
+                -
+                contratos_contract
+            )
+
+            if faltantes:
+
+                messagebox.showerror(
+                    "Erro",
+                    "Assets possuem contratos inexistentes:\n\n"
+                    +
+                    "\n".join(
+                        sorted(faltantes)
+                    )
+                )
+
+                return
+
+        df_asset = df_asset[
+            ["AccountId"]
+            +
+            [
+                c
+                for c in df_asset.columns
+                if c != "AccountId"
+            ]
+        ]
 
         for col in df_asset.columns:
             if "date" in col.lower() or "data" in col.lower():
+
                 df_asset[col] = pd.to_datetime(
-                    df_asset[col], errors="coerce"
+                    df_asset[col],
+                    errors="coerce"
                 ).dt.strftime("%Y-%m-%d")
 
         if "RecordType.Name" in df_asset.columns:
-            df_asset.rename(columns={"RecordType.Name": "RecordTypeId"}, inplace=True)        
 
-        df_asset.rename(columns=mapa_renomeacao, inplace=True)
+            df_asset.rename(
+                columns={
+                    "RecordType.Name":
+                    "RecordTypeId"
+                },
+                inplace=True
+            )
 
-        # Garante que a coluna exista e preenche com valor fixo referente ao ASSET do FLEET
-        df_asset["RecordTypeId"] = "012U6000009ru5JIAQ"    
+        df_asset.rename(
+            columns=mapa_renomeacao,
+            inplace=True
+        )
+
+        df_asset["RecordTypeId"] = "012U6000009ru5JIAQ"
 
         # ================= SALVAR =================
+
         pasta_saida = os.path.dirname(caminho_arquivo)
 
-        df_account.to_csv(os.path.join(pasta_saida, "Account.csv"), index=False, encoding="utf-8-sig")
-        df_contract.to_csv(os.path.join(pasta_saida, "Contract.csv"), index=False, encoding="utf-8-sig")
-        df_asset.to_csv(os.path.join(pasta_saida, "Asset.csv"), index=False, encoding="utf-8-sig")
+        df_account.to_csv(
+            os.path.join(pasta_saida, "Account.csv"),
+            index=False,
+            encoding="utf-8-sig"
+        )
+
+        df_contract.to_csv(
+            os.path.join(pasta_saida, "Contract.csv"),
+            index=False,
+            encoding="utf-8-sig"
+        )
+
+        df_asset.to_csv(
+            os.path.join(pasta_saida, "Asset.csv"),
+            index=False,
+            encoding="utf-8-sig"
+        )
 
         processado = True
-        
-        messagebox.showinfo("Sucesso", "Processamento concluído e CSVs gerados com sucesso!")
+
+        messagebox.showinfo(
+            "Sucesso",
+            "Processamento concluído e CSVs gerados com sucesso!"
+        )
 
         for w in frame_botoes_csv.winfo_children():
             w.destroy()
 
         for i in range(3):
-            frame_botoes_csv.grid_columnconfigure(i, weight=1)
+            frame_botoes_csv.grid_columnconfigure(
+                i,
+                weight=1
+            )
 
-        # Retirado, pois no FLEET não permite UPDATE da Conta via DataImport
-        
-        #tk.Button(frame_botoes_csv, text="Account",
-        #          command=lambda: abrir_csv("Account.csv"),
-        #          bg="#2196F3", fg="white").grid(row=0, column=0, padx=10)
+        tk.Button(
+            frame_botoes_csv,
+            text="Contract",
+            command=lambda:
+            abrir_csv("Contract.csv"),
+            bg="#2196F3",
+            fg="white"
+        ).grid(
+            row=0,
+            column=1,
+            padx=10
+        )
 
-        tk.Button(frame_botoes_csv, text="Contract",
-                  command=lambda: abrir_csv("Contract.csv"),
-                  bg="#2196F3", fg="white").grid(row=0, column=1, padx=10)
+        tk.Button(
+            frame_botoes_csv,
+            text="Asset",
+            command=lambda:
+            abrir_csv("Asset.csv"),
+            bg="#2196F3",
+            fg="white"
+        ).grid(
+            row=0,
+            column=2,
+            padx=10
+        )
 
-        tk.Button(frame_botoes_csv, text="Asset",
-                  command=lambda: abrir_csv("Asset.csv"),
-                  bg="#2196F3", fg="white").grid(row=0, column=2, padx=10)
-        
     except Exception as e:
-        messagebox.showerror("Erro ao processar", str(e))
+        messagebox.showerror(
+            "Erro ao processar",
+            str(e)
+        )
 
 # ==================== INTERFACE ====================
 
