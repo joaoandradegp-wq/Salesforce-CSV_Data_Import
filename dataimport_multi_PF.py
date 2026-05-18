@@ -8,7 +8,7 @@ import os
 caminho_arquivo = None
 pasta_saida = None
 processado = False
-versao = "1.6.2 - Multi"
+versao = "1.6.2 - Multi - LIVRE"
 
 # ==================== FUNÇÕES DE UTILIDADE ====================
 
