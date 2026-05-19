@@ -423,7 +423,7 @@ text_obs = tk.Text(root, height=5, width=70)
 text_obs.pack(pady=5)
 text_obs.insert(
     tk.END,
-    "1- Account  -> UPSERT -> CPF__pc\n"
+    "1- Account  -> UPDATE (Opcional)\n"
     "2- Contract -> INSERT\n"
     "3- Asset    -> UPSERT -> Placa__c\n\n"
     "Versão Multi-ID: Precisa organizar o XLSX manualmente, por enquanto."
