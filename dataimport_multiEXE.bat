@@ -1,1 +1,0 @@
-pyinstaller --onefile --noconsole --icon=icone.ico dataimport_multi.py
