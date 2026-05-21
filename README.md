@@ -27,7 +27,7 @@ aplicando automaticamente regras de negócio, vínculos entre objetos e ajustes 
 <ul>
 <li>Account</li>
 <li>Contract</li>
-<li>Ativo (Asset)</li>
+<li>Asset (Ativo)</li>
 </ul>
 <li>Validação de estrutura antes do processamento</li>
 </ul><br>
