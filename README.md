@@ -72,7 +72,8 @@ aplicando automaticamente regras de negócio, vínculos entre objetos e ajustes 
 <li>Contract.csv</li>
 <li>Asset.csv</li>
 </ul>
-<li>Arquivos prontos para Data Loader</li>
+<li>Arquivos prontos para Data Loader ou para fazer CTRL+V no DataImport do Inspector</li>
+<li>Exclusão automática dos arquivos CSV ao carregar nova lista ou fechar o aplicativo</li>
 <li>Codificação UTF-8</li><br>
 </ul>
 
@@ -202,7 +203,7 @@ Alguns campos são renomeados automaticamente para evitar conflitos ou bloqueios
 
 ---
 
-## 🔍 Geração de SOQL
+## 🔍 Geração de SOQL (Opcional)
 
 <ul>
 <li>Gera query pronta para buscar o AccountID pelo CPF.</li>
@@ -225,9 +226,9 @@ ORDER BY Name
 
 1. Insira os Account IDs (um por linha)  
 2. Clique em <b>Anexar Arquivo</b>  
-3. (Opcional) Clique em <b>Gerar SOQL por CPF</b>  
-4. Clique em <b>Processar e Salvar CSV</b>  
-5. Utilize os botões para copiar os arquivos  
+3. Clique em <b>Processar e Salvar CSV</b>  
+4. Utilize os botões para copiar os dados para a área de transferência
+5. Use CTRL+V no DataImport do Inspector, ou o CSV gravado na pasta do XLSX. 
 
 ---
 
