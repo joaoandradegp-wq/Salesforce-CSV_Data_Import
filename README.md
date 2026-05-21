@@ -205,9 +205,7 @@ Alguns campos são renomeados automaticamente para evitar conflitos ou bloqueios
 ## 🔍 Geração de SOQL
 
 <ul>
-<li>Extrai automaticamente CPFs da planilha</li>
-<li>Remove formatação e padroniza valores</li>
-<li>Gera query pronta:</li>
+<li>Gera query pronta para buscar o AccountID pelo CPF.</li>
 </ul>
 
 <pre>
@@ -218,7 +216,7 @@ ORDER BY Name
 </pre>
 
 <ul>
-<li>Resultado copiado automaticamente para a área de transferência</li>
+<li>Resultado copiado automaticamente para a área de transferência para ser usada do DataExport do Inspector.</li>
 </ul>
 
 ---
@@ -233,16 +231,6 @@ ORDER BY Name
 
 ---
 
-## 📥 Download
-
 <p align="center">
-  <a href="#">
-    <img src="https://img.shields.io/badge/Download-CSV%20Converter-blue?style=for-the-badge">
-  </a>
-</p>
-
----
-
-<p align="center">
-Automatizando processos de importação que normalmente seriam manuais no Salesforce. ☁️
+Automatizando processos de higienização para importação, que normalmente seriam manuais usando Excel. ☁️
 </p>
