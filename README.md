@@ -1,4 +1,4 @@
-<h1 align="center">📊 Salesforce XLSX Data Import</h1>
+<h1 align="center">📊 Salesforce CSV Data Import</h1>
 
 <p align="center">
 Ferramenta desktop desenvolvida para transformar planilhas Excel em arquivos CSV prontos para importação no Salesforce,
