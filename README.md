@@ -72,7 +72,7 @@ aplicando automaticamente regras de negócio, vínculos entre objetos e ajustes 
 <li>Contract.csv</li>
 <li>Asset.csv</li>
 </ul>
-<li>Arquivos prontos para Data Loader ou para fazer CTRL+V no DataImport do Inspector</li>
+<li>Arquivos prontos para serem importados via Data Loader ou para colar (CTRL+V) no DataImport do Salesforce Inspector</li>
 <li>Exclusão automática dos arquivos CSV ao carregar nova lista ou fechar o aplicativo</li>
 <li>Codificação UTF-8</li><br>
 </ul>
@@ -217,7 +217,7 @@ ORDER BY Name
 </pre>
 
 <ul>
-<li>Resultado copiado automaticamente para a área de transferência para ser usada do DataExport do Inspector.</li>
+<li>Resultado copiado automaticamente para a área de transferência (CTRL+C) para ser colada (CTRL+V) no DataExport do Salesforce Inspector.</li>
 </ul>
 
 ---
