@@ -45,7 +45,7 @@ Fluxo voltado para atualização e higienização de dados de clientes Pessoa F�
 <li>Relacionamento Account → Contract → Asset</li>
 <li>Tratamento automático de CPF</li>
 </ul>
-
+<br>
 </td>
 
 <td width="50%" valign="top">
@@ -78,9 +78,7 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 ---
 
-# 👤 PF — Pessoa Física
-
-## ✨ Funcionalidades
+## ✨ Funcionalidades (👤 Pessoa Física)
 
 <table width="100%">
 
@@ -228,9 +226,7 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 ---
 
-# 🏢 PJ — Pessoa Jurídica
-
-## ✨ Funcionalidades
+## ✨ Funcionalidades (🏢 Pessoa Jurídica)
 
 <table width="100%">
 
