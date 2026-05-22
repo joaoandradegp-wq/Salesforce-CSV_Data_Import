@@ -426,7 +426,6 @@ text_obs.insert(
     "1- Account  -> UPDATE (Opcional)\n"
     "2- Contract -> INSERT\n"
     "3- Asset    -> UPSERT -> Placa__c\n\n"
-    "Versão Multi-ID: Precisa organizar o XLSX manualmente, por enquanto."
 )
 text_obs.config(state=tk.DISABLED)
 

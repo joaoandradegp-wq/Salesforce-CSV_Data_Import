@@ -523,7 +523,7 @@ root.title("Conversor de Planilha para Importação via CSV "+versao+" - Aggrand
 centralizar_janela(root, 700, 450)
 root.protocol("WM_DELETE_WINDOW", ao_fechar)
 
-tk.Label(root, text="Insira os Account IDs (1 por linha):").pack(pady=5)
+tk.Label(root, text="Insira o AccountID:").pack(pady=5)
 
 frame_ids = tk.Frame(root)
 frame_ids.pack(pady=5)
@@ -546,13 +546,13 @@ text_contas.pack(side=tk.LEFT)
 scroll_ids.config(command=text_contas.yview)
 
 # ----- Contador -----
-label_contador = tk.Label(
-    frame_ids,
-    text="0",
-    font=("Verdana", 10, "bold"),
-    width=4
-)
-label_contador.pack(side=tk.LEFT, padx=6)
+#label_contador = tk.Label(
+#    frame_ids,
+#    text="0",
+#    font=("Verdana", 10, "bold"),
+#    width=4
+#)
+#label_contador.pack(side=tk.LEFT, padx=6)
 
 text_contas.bind(
     "<Control-v>",
