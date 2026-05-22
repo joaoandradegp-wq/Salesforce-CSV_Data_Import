@@ -1,4 +1,4 @@
-<h1 align="center">📊 Salesforce CSV Data Import</h1>
+<h1 align="center">📊 Salesforce CSV Data Import Suite</h1>
 
 <p align="center">
 Ferramenta desktop desenvolvida para transformar planilhas Excel em arquivos CSV prontos para importação no Salesforce,
@@ -6,232 +6,426 @@ aplicando automaticamente regras de negócio, vínculos entre objetos e ajustes 
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Status-Ativo-success">
+A suíte possui duas versões independentes:
+<b>PF (Pessoa Física)</b> e <b>PJ (Pessoa Jurídica)</b>.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/PF-Pessoa%20Física-blue">
+  <img src="https://img.shields.io/badge/PJ-Pessoa%20Jurídica-green">
   <img src="https://img.shields.io/badge/Linguagem-Python-blue">
   <img src="https://img.shields.io/badge/Interface-Tkinter-lightgrey">
 </p>
 
 ---
 
-## ✨ Funcionalidades
-
-<table style="border: none; border-collapse: collapse;">
+<table width="100%">
 <tr>
-<td width="50%" valign="top" style="border: none; padding: 15px;">
 
-### 📥 LEITURA DE PLANILHA
+<td width="50%" valign="top">
 
-<ul>
-<li>Importação de arquivos Excel (.xlsx / .xls)</li>
-<li>Detecção automática das abas necessárias:</li>
+## 👤 PF — Pessoa Física
+
+Fluxo voltado para atualização e higienização de dados de clientes Pessoa Física.
+
+### Objetos processados
+
 <ul>
 <li>Account</li>
 <li>Contract</li>
-<li>Asset (Ativo)</li>
-</ul>
-<li>Validação de estrutura antes do processamento</li>
-</ul><br>
-
-</td>
-
-<td width="50%" valign="top" style="border: none; padding: 15px;">
-
-### 🔗 VINCULAÇÃO AUTOMÁTICA
-
-<ul>
-<li>Relacionamento automático entre objetos</li>
-<li>Distribuição dos Account IDs informados</li>
-<li>Garantia de consistência entre os dados</li>
+<li>Asset</li>
 </ul>
 
-</td>
-</tr>
-
-<tr>
-<td width="50%" valign="top" style="border: none; padding: 15px;">
-
-### 🔄 TRANSFORMAÇÃO DE DADOS
+### Principais recursos
 
 <ul>
-<li>Conversão de datas para padrão Salesforce</li>
-<li>Padronização de CPF</li>
-<li>Renomeação automática de campos</li>
-<li>Correção de inconsistências comuns</li>
+<li>Atualização Account</li>
+<li>UPSERT por CPF__pc</li>
+<li>SOQL automática</li>
+<li>Relacionamento Account → Contract → Asset</li>
+<li>Tratamento automático de CPF</li>
 </ul>
 
 </td>
 
-<td width="50%" valign="top" style="border: none; padding: 15px;">
+<td width="50%" valign="top">
 
-### 📊 EXPORTAÇÃO
+## 🏢 PJ — Pessoa Jurídica
+
+Fluxo voltado para operações corporativas e gestão de contratos PJ.
+
+### Objetos processados
 
 <ul>
-<li>Geração automática de:</li>
-<ul>
-<li>Account.csv</li>
-<li>Contract.csv</li>
-<li>Asset.csv</li>
+<li>Contract</li>
+<li>Asset</li>
 </ul>
-<li>Arquivos prontos para serem importados via Data Loader ou para colar (CTRL+V) no DataImport do Salesforce Inspector</li>
-<li>Exclusão automática dos arquivos CSV ao carregar nova lista ou fechar o aplicativo</li>
-<li>Codificação UTF-8</li><br>
+
+### Principais recursos
+
+<ul>
+<li>Sem atualização Account</li>
+<li>1 Account → N Contracts</li>
+<li>Validação Contract × Asset</li>
+<li>Preparado para MultiID futuro</li>
+<li>Conversões automáticas PJ</li>
 </ul>
 
 </td>
+
 </tr>
 </table>
 
 ---
 
-## ⚙️ Regras de Negócio
+# 👤 PF — Pessoa Física
 
-### 🧾 ACCOUNT
+## ✨ Funcionalidades
+
+<table width="100%">
+
+<tr>
+
+<td width="25%" valign="top">
+
+### 📥 LEITURA DE PLANILHA
 
 <ul>
-<li>Campo <b>Id</b> é preenchido com os Account IDs informados</li>
+<li>Importação Excel (.xlsx / .xls)</li>
+<li>Detecção automática:</li>
 
-<li>Campo <b>Email</b> é automaticamente renomeado para <b>Email__c</b></li>
-
-<li>Campo <b>CPF__pc</b>:</li>
 <ul>
-<li>Remove espaços</li>
-<li>Remove formatação (não numéricos)</li>
-<li>Garante 11 dígitos (padding com zero à esquerda)</li>
+<li>Account</li>
+<li>Contract</li>
+<li>Asset</li>
 </ul>
 
-<li>Campo <b>RecordTypeId</b> fixo:</li>
-<ul>
-<li>0125A0000013RxeQAE</li>
+<li>Validação estrutural</li>
+
 </ul>
 
-<li>Campo <b>AreaNegocio__c</b>:</li>
+</td>
+
+<td width="25%" valign="top">
+
+### 🔗 VINCULAÇÃO AUTOMÁTICA
+
 <ul>
-<li>Definido como "Leves" quando existir na planilha</li>
+
+<li>Relacionamento entre objetos</li>
+
+<li>Distribuição Account IDs</li>
+
+<li>Consistência automática</li>
+
+<li>Vínculo Account → Contract → Asset</li>
+
 </ul>
 
-<li>Operação esperada:</li>
+</td>
+
+<td width="25%" valign="top">
+
+### 🔄 TRANSFORMAÇÃO
+
 <ul>
-<li><b>UPSERT via CPF__pc</b></li>
+
+<li>Conversão de datas</li>
+
+<li>Padronização CPF</li>
+
+<li>Renomeação campos</li>
+
+<li>Correção inconsistências</li>
+
 </ul>
+
+</td>
+
+<td width="25%" valign="top">
+
+### 📤 EXPORTAÇÃO
+
+<ul>
+
+<li>Account.csv</li>
+
+<li>Contract.csv</li>
+
+<li>Asset.csv</li>
+
+<li>UTF-8</li>
+
+</ul>
+
+</td>
+
+</tr>
+
+</table>
+
+---
+
+## 🧾 ACCOUNT
+
+<ul>
+
+<li>Campo <b>Id</b> preenchido automaticamente</li>
+
+<li>Email → Email__c</li>
+
+<li>CPF__pc:</li>
+
+<ul>
+
+<li>Remove caracteres</li>
+
+<li>Padroniza formato</li>
+
+<li>Padding automático</li>
+
+</ul>
+
+<li>RecordType fixo</li>
+
+<li>UPSERT via CPF__pc</li>
 
 </ul>
 
 ---
 
-### 📄 CONTRACT
+## 📄 CONTRACT
 
 <ul>
-<li>Campo <b>AccountId</b> vinculado automaticamente aos IDs informados</li>
 
-<li>Campo <b>Status</b> fixado como:</li>
-<ul>
-<li>Draft</li>
-</ul>
+<li>AccountId automático</li>
 
-<li>Campo <b>IRIS_Categoria_Contrato__c</b>:</li>
-<ul>
-<li>Valor fixo: 2</li>
-</ul>
+<li>Status = Draft</li>
 
-<li>Campos de data:</li>
-<ul>
-<li>Convertidos para formato <b>YYYY-MM-DD</b></li>
-</ul>
+<li>Conversão datas</li>
 
-<li>Campos booleanos específicos:</li>
-<ul>
-<li>IRIS_CapturaReservaPrimeiraParcela__c = TRUE</li>
-<li>IRIS_ReservaPrimeiraParcela__c = TRUE</li>
-</ul>
+<li>Flags automáticas</li>
 
-<li>Campo <b>RecordTypeId</b> fixo:</li>
-<ul>
-<li>012U6000000OTnFIAW</li>
-</ul>
-
-<li>Operação esperada:</li>
-<ul>
-<li><b>INSERT</b></li>
-</ul>
+<li>INSERT</li>
 
 </ul>
 
 ---
 
-### 🚗 ASSET
+## 🚗 ASSET
 
 <ul>
-<li>Campo <b>AccountId</b> vinculado automaticamente aos IDs informados</li>
 
-<li>Campos de data:</li>
-<ul>
-<li>Convertidos para formato <b>YYYY-MM-DD</b></li>
-</ul>
+<li>AccountId automático</li>
 
-<li>Campo <b>RecordType.Name</b>:</li>
-<ul>
-<li>Convertido automaticamente para <b>RecordTypeId</b></li>
-</ul>
+<li>Conversão datas</li>
 
-<li>Campo <b>RecordTypeId</b> fixo:</li>
-<ul>
-<li>012HY0000004NyFYAU</li>
-</ul>
+<li>RecordType.Name → RecordTypeId</li>
 
-<li>Operação esperada:</li>
-<ul>
-<li><b>UPSERT via chave externa (ex: Placa__c)</b></li>
-</ul>
+<li>UPSERT por chave externa</li>
 
 </ul>
 
 ---
 
-### 🔧 RENOMEAÇÕES AUTOMÁTICAS
+# 🏢 PJ — Pessoa Jurídica
 
-Alguns campos são renomeados automaticamente para evitar conflitos ou bloqueios de atualização no Salesforce:
+## ✨ Funcionalidades
+
+<table width="100%">
+
+<tr>
+
+<td width="25%" valign="top">
+
+### 📥 LEITURA DE PLANILHA
 
 <ul>
+
+<li>Importação Excel (.xlsx / .xls)</li>
+
+<li>Detecção automática:</li>
+
+<ul>
+
+<li>Contract</li>
+
+<li>Ativo</li>
+
+</ul>
+
+<li>Validação estrutural</li>
+
+</ul>
+
+</td>
+
+<td width="25%" valign="top">
+
+### 🔗 VINCULAÇÃO AUTOMÁTICA
+
+<ul>
+
+<li>1 Account → N Contracts</li>
+
+<li>Relacionamento Assets</li>
+
+<li>Validação cruzada</li>
+
+<li>Preparado MultiID</li>
+
+</ul>
+
+</td>
+
+<td width="25%" valign="top">
+
+### 🔄 TRANSFORMAÇÃO
+
+<ul>
+
+<li>Conversão datas</li>
+
+<li>Limpeza ContractTerm</li>
+
+<li>Renomeações automáticas</li>
+
+<li>Conversões PJ</li>
+
+</ul>
+
+</td>
+
+<td width="25%" valign="top">
+
+### 📤 EXPORTAÇÃO
+
+<ul>
+
+<li>Contract.csv</li>
+
+<li>Asset.csv</li>
+
+<li>UTF-8</li>
+
+<li>Pronto Data Loader / Inspector</li>
+
+</ul>
+
+</td>
+
+</tr>
+
+</table>
+
+---
+
+## 📄 CONTRACT
+
+<ul>
+
+<li>Remove Id automaticamente</li>
+
+<li>Relacionamento:</li>
+
+<ul>
+<li>1 Account → N Contracts</li>
+</ul>
+
+<li>Status = Draft</li>
+
+<li>IRIS_Categoria_Contrato__c = 2</li>
+
+<li>Conversão automática de datas</li>
+
+<li>ContractTerm tratado automaticamente</li>
+
+<li>Flags convertidas:</li>
+
+<ul>
+
+<li>IRIS_CapturaReservaPrimeiraParcela__c = false</li>
+
+<li>IRIS_ReservaPrimeiraParcela__c = false</li>
+
+</ul>
+
+<li>INSERT</li>
+
+</ul>
+
+---
+
+## 🚗 ASSET
+
+<ul>
+
+<li>Remove Id automaticamente</li>
+
+<li>AccountId automático</li>
+
+<li>Conversão datas</li>
+
+<li>RecordType.Name → RecordTypeId</li>
+
+<li>UPSERT via Placa__c</li>
+
+</ul>
+
+---
+
+## 🔍 VALIDAÇÃO CONTRACT × ASSET
+
+Antes da exportação o PJ valida automaticamente:
+
+<ul>
+
+<li>IRIS_Contrato__r.IRIS_CodigoContratoMasterLocavia__c</li>
+
+<li>IRIS_CodigoContratoMasterLocavia__c</li>
+
+</ul>
+
+Caso Assets apontem contratos inexistentes o processamento é interrompido.
+
+---
+
+## 🔧 RENOMEAÇÕES AUTOMÁTICAS
+
+<ul>
+
 <li>ContractNumber → _ContractNumber</li>
+
 <li>Account.Name → _Account.Name</li>
+
 <li>IDExternoAX__c → _IDExternoAX__c</li>
+
 <li>EndDate → _EndDate</li>
+
 <li>RecordType.DeveloperName → _RecordType.DeveloperName</li>
+
 <li>IRIS_Codigo_Status_do_Tanque__c → _IRIS_Codigo_Status_do_Tanque__c</li>
+
 <li>IRIS_Codigo_Situacao_do_Agendamento__c → _IRIS_Codigo_Situacao_do_Agendamento__c</li>
-</ul>
 
----
-
-## 🔍 Geração de SOQL (Opcional)
-
-<ul>
-<li>Gera query pronta para buscar o AccountID pelo CPF.</li>
-</ul>
-
-<pre>
-SELECT Id, Name, CPF__pc
-FROM Account
-WHERE CPF__pc IN (...)
-ORDER BY Name
-</pre>
-
-<ul>
-<li>Resultado copiado automaticamente para a área de transferência (CTRL+C) para ser colada (CTRL+V) no DataExport do Salesforce Inspector.</li>
 </ul>
 
 ---
 
 ## 🚀 Como usar
 
-1. Insira os Account IDs (um por linha)  
-2. Clique em <b>Anexar Arquivo</b>  
-3. Clique em <b>Processar e Salvar CSV</b>  
-4. Utilize os botões para copiar os dados para a área de transferência
-5. Use CTRL+V no DataImport do Inspector, ou o CSV gravado na pasta do XLSX. 
+1. Inserir Account IDs
+
+2. Anexar Excel
+
+3. Processar CSV
+
+4. Importar no Salesforce
+
+5. Utilizar Data Loader ou Inspector
 
 ---
 
 <p align="center">
-Automatizando processos de higienização para importação, que normalmente seriam manuais usando Excel. ☁️
+Automatizando higienização e preparação de dados para cargas Salesforce ☁️
 </p>
