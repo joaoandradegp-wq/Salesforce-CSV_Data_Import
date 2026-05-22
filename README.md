@@ -24,7 +24,7 @@ A suíte possui duas versões independentes:
 
 <td width="50%" valign="top">
 
-## 👤 PF — Pessoa Física
+## 👤 PF - Pessoa Física
 
 Fluxo voltado para atualização e higienização de dados de clientes Pessoa Física.
 ### Objetos processados
@@ -49,7 +49,7 @@ Fluxo voltado para atualização e higienização de dados de clientes Pessoa F�
 
 <td width="50%" valign="top">
 
-## 🏢 PJ — Pessoa Jurídica
+## 🏢 PJ - Pessoa Jurídica
 
 Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
