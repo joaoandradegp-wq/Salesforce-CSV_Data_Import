@@ -27,7 +27,6 @@ A suíte possui duas versões independentes:
 ## 👤 PF — Pessoa Física
 
 Fluxo voltado para atualização e higienização de dados de clientes Pessoa Física.
-
 ### Objetos processados
 
 <ul>
