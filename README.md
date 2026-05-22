@@ -45,7 +45,7 @@ Fluxo voltado para atualização e higienização de dados de clientes Pessoa F�
 <li>Relacionamento Account → Contract → Asset</li>
 <li>Tratamento automático de CPF</li>
 </ul>
-<br>
+
 </td>
 
 <td width="50%" valign="top">
@@ -54,14 +54,14 @@ Fluxo voltado para atualização e higienização de dados de clientes Pessoa F�
 
 Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
-### Objetos processados
+### <br>Objetos processados
 
 <ul>
 <li>Contract</li>
 <li>Asset</li>
 </ul>
 
-### Principais recursos
+### <br>Principais recursos
 
 <ul>
 <li>Sem atualização Account</li>
@@ -70,7 +70,7 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 <li>Preparado para MultiID futuro</li>
 <li>Conversões automáticas PJ</li>
 </ul>
-
+<br>
 </td>
 
 </tr>
@@ -78,18 +78,20 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 ---
 
-## ✨ Funcionalidades (👤 Pessoa Física)
+## <br>✨ Funcionalidades para Pessoa Física 👤
 
 <table width="100%">
 
 <tr>
 
-<td width="25%" valign="top">
+<td width="50%" valign="top">
 
 ### 📥 LEITURA DE PLANILHA
 
 <ul>
+
 <li>Importação Excel (.xlsx / .xls)</li>
+
 <li>Detecção automática:</li>
 
 <ul>
@@ -98,49 +100,53 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 <li>Asset</li>
 </ul>
 
-<li>Validação estrutural</li>
-
+<li>Validação estrutural antes do processamento</li>
+<br>
 </ul>
 
 </td>
 
-<td width="25%" valign="top">
+<td width="50%" valign="top">
 
 ### 🔗 VINCULAÇÃO AUTOMÁTICA
 
 <ul>
 
-<li>Relacionamento entre objetos</li>
+<li>Relacionamento automático entre objetos</li>
 
 <li>Distribuição Account IDs</li>
 
-<li>Consistência automática</li>
-
 <li>Vínculo Account → Contract → Asset</li>
+
+<li>Consistência automática entre registros</li>
 
 </ul>
 
 </td>
 
-<td width="25%" valign="top">
+</tr>
 
-### 🔄 TRANSFORMAÇÃO
+<tr>
+
+<td width="50%" valign="top">
+
+### 🔄 TRANSFORMAÇÃO DE DADOS
 
 <ul>
 
-<li>Conversão de datas</li>
+<li>Conversão automática de datas</li>
 
 <li>Padronização CPF</li>
 
-<li>Renomeação campos</li>
+<li>Renomeação automática de campos</li>
 
-<li>Correção inconsistências</li>
+<li>Correção de inconsistências</li>
 
 </ul>
 
 </td>
 
-<td width="25%" valign="top">
+<td width="50%" valign="top">
 
 ### 📤 EXPORTAÇÃO
 
@@ -152,8 +158,10 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 <li>Asset.csv</li>
 
-<li>UTF-8</li>
+<li>Codificação UTF-8</li>
 
+<li>Pronto para Data Loader e Inspector</li>
+<br>
 </ul>
 
 </td>
@@ -162,77 +170,119 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 </table>
 
----
 
-## 🧾 ACCOUNT
 
-<ul>
-
-<li>Campo <b>Id</b> preenchido automaticamente</li>
-
-<li>Email → Email__c</li>
-
-<li>CPF__pc:</li>
+## <br>🧾 ACCOUNT
 
 <ul>
 
-<li>Remove caracteres</li>
+<li>Campo <b>Id</b> é preenchido com os Account IDs informados</li>
 
-<li>Padroniza formato</li>
+<li>Campo <b>Email</b> é automaticamente renomeado para <b>Email__c</b></li>
 
-<li>Padding automático</li>
+<li>Campo <b>CPF__pc</b>:</li>
+
+<ul>
+
+<li>Remove espaços</li>
+
+<li>Garante 11 dígitos (padding com zero à esquerda)</li>
 
 </ul>
 
-<li>RecordType fixo</li>
+<li><b>RecordTypeId</b> fixo:</li>
 
-<li>UPSERT via CPF__pc</li>
+<ul>
+<li>0125A0000013RxeQAE</li>
+</ul>
+
+<li><b>AreaNegocio__c</b> fixado como <b>Leves</b> (quando existente)</li>
+
+<li>Operação esperada:</li>
+
+<ul>
+<li><b>UPSERT via CPF__pc</b></li>
+</ul>
 
 </ul>
 
----
+
 
 ## 📄 CONTRACT
 
 <ul>
 
-<li>AccountId automático</li>
+<li>Campo <b>AccountId</b> vinculado aos IDs informados</li>
 
-<li>Status = Draft</li>
+<li>Campo <b>Status</b> fixado como <b>Draft</b></li>
 
-<li>Conversão datas</li>
+<li><b>IRIS_Categoria_Contrato__c</b> fixo:</li>
 
-<li>Flags automáticas</li>
+<ul>
+<li>2</li>
+</ul>
 
-<li>INSERT</li>
+<li>Campos de data convertidos para:</li>
+
+<ul>
+<li>YYYY-MM-DD</li>
+</ul>
+
+<li>Campos booleanos específicos são forçados como <b>TRUE</b></li>
+
+<li><b>RecordTypeId</b> fixo:</li>
+
+<ul>
+<li>012U6000000OTnFIAW</li>
+</ul>
+
+<li>Operação esperada:</li>
+
+<ul>
+<li><b>INSERT</b></li>
+</ul>
 
 </ul>
 
----
+
 
 ## 🚗 ASSET
 
 <ul>
 
-<li>AccountId automático</li>
+<li>Campo <b>AccountId</b> vinculado aos IDs informados</li>
 
-<li>Conversão datas</li>
+<li>Campos de data convertidos para:</li>
 
-<li>RecordType.Name → RecordTypeId</li>
+<ul>
+<li>YYYY-MM-DD</li>
+</ul>
 
-<li>UPSERT por chave externa</li>
+<li>Campo <b>RecordType.Name</b> convertido para <b>RecordTypeId</b></li>
+
+<li><b>RecordTypeId</b> fixo:</li>
+
+<ul>
+<li>012HY0000004NyFYAU</li>
+</ul>
+
+<li>Operação esperada:</li>
+
+<ul>
+<li><b>UPSERT por chave externa</b></li>
+</ul>
 
 </ul>
 
 ---
 
-## ✨ Funcionalidades (🏢 Pessoa Jurídica)
+## <br>✨ Funcionalidades para Pessoa Jurídica 🏢
 
 <table width="100%">
 
 <tr>
 
-<td width="25%" valign="top">
+<td width="50%" valign="top">
 
 ### 📥 LEITURA DE PLANILHA
 
@@ -243,56 +293,57 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 <li>Detecção automática:</li>
 
 <ul>
-
 <li>Contract</li>
-
 <li>Ativo</li>
-
 </ul>
 
-<li>Validação estrutural</li>
-
+<li>Validação estrutural antes do processamento</li>
+<br>
 </ul>
 
 </td>
 
-<td width="25%" valign="top">
+<td width="50%" valign="top">
 
 ### 🔗 VINCULAÇÃO AUTOMÁTICA
 
 <ul>
 
-<li>1 Account → N Contracts</li>
+<li>Relacionamento 1 Account → N Contracts</li>
 
-<li>Relacionamento Assets</li>
+<li>Distribuição automática AccountId</li>
 
-<li>Validação cruzada</li>
+<li>Validação Contract × Asset</li>
 
-<li>Preparado MultiID</li>
+<li>Preparado para MultiID futuro</li>
 
 </ul>
 
 </td>
 
-<td width="25%" valign="top">
+</tr>
 
-### 🔄 TRANSFORMAÇÃO
+<tr>
+
+<td width="50%" valign="top">
+
+### 🔄 TRANSFORMAÇÃO DE DADOS
 
 <ul>
 
-<li>Conversão datas</li>
+<li>Conversão automática de datas</li>
 
-<li>Limpeza ContractTerm</li>
+<li>Tratamento ContractTerm</li>
 
-<li>Renomeações automáticas</li>
+<li>Renomeação automática</li>
 
-<li>Conversões PJ</li>
+<li>Conversões específicas PJ</li>
 
 </ul>
 
 </td>
 
-<td width="25%" valign="top">
+<td width="50%" valign="top">
 
 ### 📤 EXPORTAÇÃO
 
@@ -302,41 +353,52 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 <li>Asset.csv</li>
 
-<li>UTF-8</li>
+<li>Codificação UTF-8</li>
 
-<li>Pronto Data Loader / Inspector</li>
+<li>Pronto para Data Loader e Inspector</li>
 
 </ul>
-
+<br>
 </td>
 
 </tr>
 
 </table>
 
----
 
-## 📄 CONTRACT
+## <br>📄 CONTRACT
+
+<ul>
+
+<li>Campo <b>Id</b> removido automaticamente</li>
+
+<li>Relacionamento automático:</li>
 
 <ul>
 
-<li>Remove Id automaticamente</li>
+<li><b>1 Account → N Contracts</b></li>
 
-<li>Relacionamento:</li>
-
-<ul>
-<li>1 Account → N Contracts</li>
 </ul>
 
-<li>Status = Draft</li>
+<li>Campo <b>AccountId</b> distribuído automaticamente</li>
 
-<li>IRIS_Categoria_Contrato__c = 2</li>
+<li>Campo <b>Status</b> fixado como <b>Draft</b></li>
 
-<li>Conversão automática de datas</li>
+<li><b>IRIS_Categoria_Contrato__c</b> fixo:</li>
 
-<li>ContractTerm tratado automaticamente</li>
+<ul>
+<li>2</li>
+</ul>
 
-<li>Flags convertidas:</li>
+<li>Campos de data convertidos para:</li>
+
+<ul>
+<li>YYYY-MM-DD</li>
+</ul>
+
+<li><b>ContractTerm</b> tratado automaticamente</li>
+
+<li>Campos booleanos específicos:</li>
 
 <ul>
 
@@ -346,33 +408,57 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 </ul>
 
-<li>INSERT</li>
+<li><b>RecordTypeId</b> fixo:</li>
+
+<ul>
+<li>012U6000009ru5eIAA</li>
+</ul>
+
+<li>Operação esperada:</li>
+
+<ul>
+<li><b>INSERT</b></li>
+</ul>
 
 </ul>
 
----
+
 
 ## 🚗 ASSET
 
 <ul>
 
-<li>Remove Id automaticamente</li>
+<li>Campo <b>Id</b> removido automaticamente</li>
 
-<li>AccountId automático</li>
+<li>Campo <b>AccountId</b> vinculado automaticamente</li>
 
-<li>Conversão datas</li>
+<li>Campos de data convertidos para:</li>
 
-<li>RecordType.Name → RecordTypeId</li>
+<ul>
+<li>YYYY-MM-DD</li>
+</ul>
 
-<li>UPSERT via Placa__c</li>
+<li>Campo <b>RecordType.Name</b> convertido para <b>RecordTypeId</b></li>
 
+<li><b>RecordTypeId</b> fixo:</li>
+
+<ul>
+<li>012U6000009ru5JIAQ</li>
+</ul>
+
+<li>Operação esperada:</li>
+
+<ul>
+<li><b>UPSERT via Placa__c</b></li>
+</ul>
+<br>
 </ul>
 
 ---
 
 ## 🔍 VALIDAÇÃO CONTRACT × ASSET
 
-Antes da exportação o PJ valida automaticamente:
+O fluxo PJ valida automaticamente:
 
 <ul>
 
@@ -387,6 +473,8 @@ Caso Assets apontem contratos inexistentes o processamento é interrompido.
 ---
 
 ## 🔧 RENOMEAÇÕES AUTOMÁTICAS
+
+Alguns campos são renomeados automaticamente para evitar conflitos ou bloqueios de atualização:
 
 <ul>
 
