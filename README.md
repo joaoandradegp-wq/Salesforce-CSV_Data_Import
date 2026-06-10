@@ -77,7 +77,7 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 ---
 
-## <br>✨ Funcionalidades para Pessoa Física 👤
+## 👤 Módulo Pessoa Física
 
 <table width="100%">
 
@@ -265,6 +265,12 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 <li>012HY0000004NyFYAU</li>
 </ul>
 
+<li><b>Novo Status</b>:</li>
+
+<ul>
+<li>"Disponível" → "Locado"</li>
+</ul>
+
 <li>Operação esperada:</li>
 
 <ul>
@@ -275,7 +281,7 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 ---
 
-## <br>✨ Funcionalidades para Pessoa Jurídica 🏢
+## 🏢 Módulo Pessoa Jurídica
 
 <table width="100%">
 
