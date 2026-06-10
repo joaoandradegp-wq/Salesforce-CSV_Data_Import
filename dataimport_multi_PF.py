@@ -8,7 +8,7 @@ import os
 caminho_arquivo = None
 pasta_saida = None
 processado = False
-versao = "1.6.2 - Multi - LIVRE"
+versao = "1.6.3 - Multi - LIVRE"
 
 # ==================== FUNÇÕES DE UTILIDADE ====================
 
@@ -227,9 +227,12 @@ def processar_planilha():
 
 
         if "CPF__pc" in df_account.columns:
-            df_account["CPF__pc"] = df_account["CPF__pc"].astype(str).str.strip()
-            df_account["CPF__pc"] = df_account["CPF__pc"].apply(
-                lambda x: ("0" + x) if len(x) == 10 else x
+            df_account["CPF__pc"] = (
+                df_account["CPF__pc"]
+                .fillna("")
+                .astype(str)
+                .str.replace(r"\D", "", regex=True)
+                .str.zfill(11)
             )
 
         df_account["RecordTypeId"] = "0125A0000013RxeQAE"
@@ -280,6 +283,11 @@ def processar_planilha():
         # ================= ASSET =================
         df_asset = pd.read_excel(
             xls, sheet_name=[s for s in xls.sheet_names if "ativo" in s.lower()][0]
+        )
+
+        if "Status" in df_asset.columns:
+            df_asset["Status"] = df_asset["Status"].replace(
+                {"Disponível": "Locado"}
         )
 
         df_asset["AccountId"] = ids
