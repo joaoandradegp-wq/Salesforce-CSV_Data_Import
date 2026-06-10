@@ -53,7 +53,7 @@ Fluxo voltado para atualização e higienização de dados de clientes Pessoa F�
 
 Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
-### <br>Objetos processados
+### Objetos processados
 
 <ul>
 <li>Contract</li>
@@ -265,10 +265,10 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 <li>012HY0000004NyFYAU</li>
 </ul>
 
-<li><b>Novo Status</b>:</li>
+<li><b>Conversão de Status Válido</b>:</li>
 
 <ul>
-<li>"Disponível" → "Locado"</li>
+<li>"<b>Disponível</b>" será substituído por "<b>Locado</b>"</li>
 </ul>
 
 <li>Operação esperada:</li>
