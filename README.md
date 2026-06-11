@@ -46,7 +46,7 @@ A suíte possui duas versões independentes:
 
 </td>
 
-<td width="50%" valign="top">
+<td width="100%" valign="top">
 
 ## 🏢 PJ - Pessoa Jurídica
 
@@ -93,7 +93,7 @@ A suíte possui duas versões independentes:
 
 <tr>
 
-<td width="50%" valign="top">
+<td width="100%" valign="top">
 
 ### 📥 LEITURA DE PLANILHA
 
@@ -115,7 +115,7 @@ A suíte possui duas versões independentes:
 
 </td>
 
-<td width="50%" valign="top">
+<td width="100%" valign="top">
 
 ### 🔗 VINCULAÇÃO AUTOMÁTICA
 
@@ -137,7 +137,7 @@ A suíte possui duas versões independentes:
 
 <tr>
 
-<td width="50%" valign="top">
+<td width="100%" valign="top">
 
 ### 🔄 TRANSFORMAÇÃO DE DADOS
 
@@ -155,7 +155,7 @@ A suíte possui duas versões independentes:
 
 </td>
 
-<td width="50%" valign="top">
+<td width="100%" valign="top">
 
 ### 📤 EXPORTAÇÃO
 
@@ -297,7 +297,7 @@ A suíte possui duas versões independentes:
 
 <tr>
 
-<td width="50%" valign="top">
+<td width="100%" valign="top">
 
 ### 📥 LEITURA DE PLANILHA
 
@@ -318,7 +318,7 @@ A suíte possui duas versões independentes:
 
 </td>
 
-<td width="50%" valign="top">
+<td width="100%" valign="top">
 
 ### 🔗 VINCULAÇÃO AUTOMÁTICA
 
@@ -340,7 +340,7 @@ A suíte possui duas versões independentes:
 
 <tr>
 
-<td width="50%" valign="top">
+<td width="100%" valign="top">
 
 ### 🔄 TRANSFORMAÇÃO DE DADOS
 
@@ -358,7 +358,7 @@ A suíte possui duas versões independentes:
 
 </td>
 
-<td width="50%" valign="top">
+<td width="100%" valign="top">
 
 ### 📤 EXPORTAÇÃO
 
