@@ -288,7 +288,10 @@ def processar_planilha():
         if "Status" in df_asset.columns:
             df_asset["Status"] = df_asset["Status"].replace(
                 {"Disponível": "Locado"}
-        )
+            )
+            df_asset["Status"] = df_asset["Status"].replace(
+                {"Alugado": "Locado"}
+            )
 
         df_asset["AccountId"] = ids
         df_asset.drop(columns=["Id"], inplace=True, errors="ignore")
@@ -297,10 +300,7 @@ def processar_planilha():
         df_asset["AccountId"] = df_asset["AccountId"].astype(str)
 
         if len(df_asset) != len(ids):
-            messagebox.showerror(
-            "Erro",
-            "Quantidade de Account IDs diferente da quantidade de registros da aba Assets."
-            )
+            messagebox.showerror("Erro","Quantidade de Account IDs diferente da quantidade de registros da aba Assets.")
             return
 
         for col in df_asset.columns:
