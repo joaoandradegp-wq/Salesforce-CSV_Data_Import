@@ -278,11 +278,10 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 <li>012HY0000004NyFYAU</li>
 </ul>
 
-<li><b>Conversão de Status Válido</b>:</li>
+<li><b>Conversão para Status válido disponível</b>:</li>
 
 <ul>
-<li>"<b>Disponível</b>" será substituído por "<b>Locado</b>"</li>
-<li>"<b>Alugado</b>" será substituído por "<b>Locado</b>"</li>
+<li>"<b>Disponível</b>" e "<b>Alugado</b>", será substituído por "<b>Locado</b>"</li>
 </ul>
 
 <li>Operação esperada:</li>
