@@ -282,6 +282,7 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 <ul>
 <li>"<b>Disponível</b>" será substituído por "<b>Locado</b>"</li>
+<li>"<b>Alugado</b>" será substituído por "<b>Locado</b>"</li>
 </ul>
 
 <li>Operação esperada:</li>
