@@ -77,6 +77,19 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 ---
 
+## 🚀 Como usar
+
+1. Inserir Account IDs da ORG, baseado no CPF/CNPJ.
+2. Anexar Excel.
+3. Clicar em <b>Processar CSV</b>.
+4. Clicar nos botões que representam os objetos (Account/Contract/Asset)
+5. O CSV vai estar copiado na <b>Área de Transferência</b> (CTRL+C).
+6. Abrir o <b>Data Import</b> do Salesforce Inspector ou no Data Loader.
+7. Colar o que foi copiado (CTRL+V).
+8. Ajustar o que for pedido no Data Loader ou Salesforce Inspector.
+
+---
+
 ## 👤 Módulo Pessoa Física
 
 <table width="100%">
@@ -456,7 +469,6 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 <ul>
 <li><b>UPSERT via Placa__c</b></li>
 </ul>
-<br>
 </ul>
 
 ---
@@ -498,20 +510,6 @@ Alguns campos são renomeados automaticamente para evitar conflitos ou bloqueios
 <li>IRIS_Codigo_Situacao_do_Agendamento__c → _IRIS_Codigo_Situacao_do_Agendamento__c</li>
 
 </ul>
-
----
-
-## 🚀 Como usar
-
-1. Inserir Account IDs
-
-2. Anexar Excel
-
-3. Processar CSV
-
-4. Importar no Salesforce
-
-5. Utilizar Data Loader ou Inspector
 
 ---
 
