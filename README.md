@@ -514,5 +514,5 @@ Alguns campos são renomeados automaticamente para evitar conflitos ou bloqueios
 ---
 
 <p align="center">
-Automatizando higienização e preparação de dados para cargas Salesforce ☁️
+Automatizando higienização e preparação de dados para cargas Salesforce. ☁️
 </p>
