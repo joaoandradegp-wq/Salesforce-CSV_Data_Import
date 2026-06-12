@@ -13,7 +13,7 @@ A suíte possui duas versões independentes:
 <p align="center">
   <img src="https://img.shields.io/badge/PF-Pessoa%20Física-blue">
   <img src="https://img.shields.io/badge/PJ-Pessoa%20Jurídica-green">
-  <img src="https://img.shields.io/badge/Linguagem-Python-blue">
+  <img src="https://img.shields.io/badge/Linguagem-Python-orange">
   <img src="https://img.shields.io/badge/Interface-Tkinter-lightgrey">
 </p>
 
