@@ -11,6 +11,8 @@ A suíte possui duas versões independentes:
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Status-Ativo-success">
+  <img src="https://img.shields.io/badge/Plataforma-Windows-blue">
   <img src="https://img.shields.io/badge/PF-Pessoa%20Física-blue">
   <img src="https://img.shields.io/badge/PJ-Pessoa%20Jurídica-green">
   <img src="https://img.shields.io/badge/Linguagem-Python-orange">
