@@ -25,7 +25,7 @@ A suíte possui duas versões independentes:
 Escolha a versão mais adequada para sua necessidade.
 
 | Versão | Descrição | Download |
-|--------|-----------|----------|
+|--------|---------|----------|
 | **CSV Data Import 1.7** | **PF 1.6.2 + PJ 1.7** | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.7/SF-DataImport_PF-PJ.rar"><b>Clique aqui</b></a> |
 | **CSV Data Import 1.6.3** | **Apenas PF** | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.6.3/SF-DataImport_1.6.3-Multi.rar"><b>Clique aqui</b></a> |
 | **SOQL Generator 1.0** | Gerador de sintaxe SOQL para pesquisa no objeto OPPORTUNITY por múltiplos id´s, com limite de registros personalizável.| <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/SOQL.exe"><b>Clique aqui</b></a> |
