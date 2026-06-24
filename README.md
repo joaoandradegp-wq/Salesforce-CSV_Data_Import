@@ -20,6 +20,24 @@ A suíte possui duas versões independentes:
 
 ---
 
+## ⬇️ Releases
+
+Escolha a versão mais adequada para sua necessidade.
+
+| Versão | Descrição | Download |
+|--------|-----------|----------|
+| **CSV Data Import 1.7** | **PF 1.6.2 + PJ 1.7** | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.7/SF-DataImport_PF-PJ.rar"><b>Clique aqui</b></a> |
+| **CSV Data Import 1.6.3** | **Apenas PF** | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.6.3/SF-DataImport_1.6.3-Multi.rar"><b>Clique aqui</b></a> |
+| **SOQL Generator 1.0** | Gerador de sintaxe SOQL para pesquisa no objeto OPPORTUNITY por múltiplos id´s, com limite de registros personalizável.| <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/SOQL.exe"><b>Clique aqui</b></a> |
+
+> **Recomendado:** Utilize o **Salesforce CSV Data Import 1.7**, que contém suporte para **Pessoa Física (PF)** e **Pessoa Jurídica (PJ)**, além das melhorias e correções mais recentes.
+>
+> A **versão 1.6.3** é destinada aos usuários que necessitam apenas da importação de **Pessoa Física (PF)**.
+>
+> O **SOQL Generator** é uma ferramenta opcional para geração de consultas SOQL e pode ser utilizada de forma independente.
+
+---
+
 <table width="100%">
 <tr>
 
