@@ -40,9 +40,9 @@ def gerar_partes():
         ids_formatados = ",".join(f"'{x}'" for x in parte_ids)
 
         soql = (
-            "SELECT Id, IRIS_Opportunity__r.Id "
+            "SELECT IRIS_Opportunity__r.Id, id "
             "FROM Contract "
-            f"WHERE IRIS_Opportunity__r.Id IN ({ids_formatados})"
+            f"WHERE IRIS_Opportunity__r.Id IN ({ids_formatados}) order by IRIS_Opportunity__r.Id"
         )
 
         soql_partes.append(soql)
