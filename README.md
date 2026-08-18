@@ -6,8 +6,7 @@ aplicando automaticamente regras de negócio, vínculos entre objetos e ajustes 
 </p>
 
 <p align="center">
-A suíte possui duas versões independentes:
-<b>PF (Pessoa Física)</b> e <b>PJ (Pessoa Jurídica)</b>.
+A suíte possui duas versões independentes: <b>PF (Pessoa Física)</b> e <b>PJ (Pessoa Jurídica)</b>.
 </p>
 
 <p align="center">
@@ -22,758 +21,233 @@ A suíte possui duas versões independentes:
 
 ## ⬇️ Releases
 
-Escolha a versão mais adequada para sua necessidade.
+| Versão | Módulo | Descrição | Download |
+|--------|--------|-----------|----------|
+| 1.6.3 | PF | Pessoa Física | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.6.3/SF-DataImport_1.6.3-Multi.rar) |
+| 1.6.2.1 | PJ | Pessoa Jurídica | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.7/SF-DataImport_PF-PJ.rar) |
+| 1.0 | SOQL Generator | Gerador de consultas SOQL por múltiplos IDs | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/SOQL.exe) |
+| 1.0 | Update Contract Database | Preparação de dados para atualização de Contracts | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/Update_Contract_PF.exe) |
 
-| Versão                           | Descrição                                                                                                | Download                                                                                                                                              |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **CSV Data Import 1.6.2.1**      | **Pessoa Jurídica**                                                                                      | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.7/SF-DataImport_PF-PJ.rar"><b>Clique aqui</b></a>         |
-| **CSV Data Import 1.6.3**        | **Pessoa Física**                                                                                        | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.6.3/SF-DataImport_1.6.3-Multi.rar"><b>Clique aqui</b></a> |
-| **SOQL Generator 1.0**           | Gerador de consultas SOQL para pesquisa no objeto <br>CONTRACT a partir de múltiplos IDs de Opportunity. | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/SOQL.exe"><b>Clique aqui</b></a>                        |
-| **Update Contract Database 1.0** | Tratamento e preparação de dados do objeto <br>CONTRACT para atualização no Salesforce.                  | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/Update_Contract_PF.exe"><b>Clique aqui</b></a>          |
-
-> A **versão 1.6.3** é destinada aos usuários que necessitam apenas da importação de **Pessoa Física (PF)**.
->
-> O **SOQL Generator** é uma ferramenta opcional para geração de consultas SOQL e pode ser utilizada de forma independente.
->
-> O **Update Contract Database** é uma ferramenta opcional para tratamento e preparação de dados de contratos e pode ser utilizada de forma independente.
+> **SOQL Generator** e **Update Contract Database** são ferramentas independentes.
 
 ---
 
-<table width="100%">
-<tr>
+## 🧭 Comparativo PF × PJ
 
-<td width="50%" valign="top">
-
-## 👤 PF - Pessoa Física
-
-Fluxo voltado para atualização e higienização de dados de clientes Pessoa Física.
-
-### Objetos processados
-
-<ul>
-<li>Account</li>
-<li>Contract</li>
-<li>Asset</li>
-</ul>
-
-### Principais recursos
-
-<ul>
-<li>Atualização Account</li>
-<li>UPSERT por CPF__pc</li>
-<li>SOQL automática</li>
-<li>Relacionamento Account → Contract → Asset</li>
-<li>Tratamento automático de CPF</li>
-</ul>
-
-</td>
-
-<td width="50%" valign="top">
-
-## 🏢 PJ - Pessoa Jurídica
-
-Fluxo voltado para operações corporativas e gestão de contratos PJ.
-
-### Objetos processados
-
-<ul>
-<li>Contract</li>
-<li>Asset</li>
-</ul>
-
-### <br>Principais recursos
-
-<ul>
-<li>Sem atualização Account</li>
-<li>1 Account → N Contracts</li>
-<li>Validação Contract × Asset</li>
-<li>Preparado para MultiID futuro</li>
-<li>Conversões automáticas PJ</li>
-</ul>
-<br>
-</td>
-
-</tr>
-</table>
+| | 👤 PF — Pessoa Física | 🏢 PJ — Pessoa Jurídica |
+|---|---|---|
+| **Foco** | Preparação de dados de clientes Pessoa Física | Preparação de Contracts e Assets |
+| **Objetos** | Account, Contract, Asset | Account, Contract, Asset |
+| **Relacionamento** | 1 Account → 1 Contract / 1 Asset | 1 Account → N Contracts / N Assets |
+| **Recursos** | · UPDATE opcional de Account <br>· UPSERT de Asset por `Placa__c` <br>· SOQL por CPF <br>· Tratamento de CPF | · Distribuição automática de `AccountId` <br>· Validação Contract × Asset <br>· UPSERT de Asset por `Placa__c` |
 
 ---
 
 ## 🚀 Como usar
 
-1. Inserir Account IDs da ORG, baseado no CPF/CNPJ.
-2. Anexar Excel.
-3. Clicar em <b>Processar CSV</b>.
-4. Clicar nos botões que representam os objetos (Account/Contract/Asset).
-5. O CSV vai estar copiado na <b>Área de Transferência</b> (CTRL+C).
-6. Abrir o <b>Data Import</b> do Salesforce Inspector ou no Data Loader.
-7. Colar o que foi copiado (CTRL+V).
-8. Ajustar o que for pedido no Data Loader ou Salesforce Inspector.
+| Passo | Ação |
+|---|---|
+| 1 | Inserir os Account IDs da ORG |
+| 2 | Anexar o arquivo Excel |
+| 3 | Clicar em **Processar e Salvar CSV** |
+| 4 | Selecionar o objeto desejado |
+| 5 | O CSV é copiado para a Área de Transferência |
+| 6 | Abrir o Data Import do Salesforce Inspector ou o Data Loader |
+| 7 | Colar com **CTRL+V** |
+| 8 | Ajustar o que for solicitado pelo Salesforce |
 
 ---
 
 ## 👤 Módulo Pessoa Física
 
-<br>
-
-<table width="100%">
-
-<tr>
-
-<td width="50%" valign="top">
-
-### 📥 LEITURA DE PLANILHA
-
-<ul>
-
-<li>Importação Excel (.xlsx / .xls)</li>
-
-<li>Detecção automática:</li>
-
-<ul>
-<li>Account</li>
-<li>Contract</li>
-<li>Asset</li>
-</ul>
-
-<li>Validação estrutural antes do processamento</li>
-<br>
-</ul>
-
-</td>
-
-<td width="50%" valign="top">
-
-### 🔗 VINCULAÇÃO AUTOMÁTICA
-
-<ul>
-
-<li>Relacionamento automático entre objetos</li>
-
-<li>Distribuição Account IDs</li>
-
-<li>Vínculo Account → Contract → Asset</li>
-
-<li>Consistência automática entre registros</li>
-
-</ul>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td width="50%" valign="top">
-
-### 🔄 TRANSFORMAÇÃO DE DADOS
-
-<ul>
-
-<li>Conversão automática de datas</li>
-
-<li>Padronização CPF</li>
-
-<li>Renomeação automática de campos</li>
-
-<li>Correção de inconsistências</li>
-
-</ul>
-
-</td>
-
-<td width="50%" valign="top">
-
-### 📤 EXPORTAÇÃO
-
-<ul>
-
-<li>Account.csv</li>
-
-<li>Contract.csv</li>
-
-<li>Asset.csv</li>
-
-<li>Codificação UTF-8</li>
-
-<li>Pronto para Data Loader e Inspector</li>
-<br>
-</ul>
-
-</td>
-
-</tr>
-
-</table>
-
-## <br>🧾 ACCOUNT
-
-<ul>
-
-<li>Campo <b>Id</b> é preenchido com os Account IDs informados</li>
-
-<li>Campo <b>Email</b> é automaticamente renomeado para <b>Email__c</b></li>
-
-<li>Campo <b>CPF__pc</b>:</li>
-
-<ul>
-
-<li>Remove espaços</li>
-
-<li>Garante 11 dígitos (padding com zero à esquerda)</li>
-
-</ul>
-
-<li><b>RecordTypeId</b> fixo:</li>
-
-<ul>
-<li>0125A0000013RxeQAE</li>
-</ul>
-
-<li><b>AreaNegocio__c</b> fixado como <b>Leves</b> (quando existente)</li>
-
-<li>Operação esperada:</li>
-
-<ul>
-<li><b>UPSERT via CPF__pc</b></li>
-</ul>
-
-</ul>
-
-## 📄 CONTRACT
-
-<ul>
-
-<li>Campo <b>AccountId</b> vinculado aos IDs informados</li>
-
-<li>Campo <b>Status</b> fixado como <b>Draft</b></li>
-
-<li><b>IRIS_Categoria_Contrato__c</b> fixo:</li>
-
-<ul>
-<li>2</li>
-</ul>
-
-<li>Campos de data convertidos para:</li>
-
-<ul>
-<li>YYYY-MM-DD</li>
-</ul>
-
-<li>Campos booleanos específicos são forçados como <b>TRUE</b></li>
-
-<li><b>RecordTypeId</b> fixo:</li>
-
-<ul>
-<li>012U6000000OTnFIAW</li>
-</ul>
-
-<li>Operação esperada:</li>
-
-<ul>
-<li><b>INSERT</b></li>
-</ul>
-
-</ul>
-
-## 🚗 ASSET
-
-<ul>
-
-<li>Campo <b>AccountId</b> vinculado aos IDs informados</li>
-
-<li>Campos de data convertidos para:</li>
-
-<ul>
-<li>YYYY-MM-DD</li>
-</ul>
-
-<li>Campo <b>RecordType.Name</b> convertido para <b>RecordTypeId</b></li>
-
-<li><b>RecordTypeId</b> fixo:</li>
-
-<ul>
-<li>012HY0000004NyFYAU</li>
-</ul>
-
-<li><b>Conversão de Status para valores válidos</b>:</li>
-
-<ul>
-<li>"<b>Disponível</b>" e "<b>Alugado</b>" serão substituídos por "<b>Locado</b>"</li>
-</ul>
-
-<li>Operação esperada:</li>
-
-<ul>
-<li><b>UPSERT por chave externa</b></li>
-</ul>
-
-</ul>
+### Leitura de planilha
+Importação **.xlsx / .xls** com abas obrigatórias `Account`, `Contract`, `Ativo`, validação de abas e de quantidade de registros.
+
+### Vinculação automática
+Account ID informado pelo usuário · **1 Account → 1 Contract** · **1 Account → 1 Asset** · vínculo automático pelo `AccountId`.
+
+### Transformação de dados
+Conversão de datas · padronização de CPF · renomeação de campos · conversão de Status do Asset · aplicação de `RecordTypeId`.
+
+### Exportação
+`Account.csv` · `Contract.csv` · `Asset.csv` — codificação UTF-8.
+
+### Regras por objeto
+
+| Objeto | Campo | Regra |
+|---|---|---|
+| **Account** | `Id` | Recebe os Account IDs informados (quantidade deve bater com os registros da aba) |
+| | `Email` → `Email__c` | Renomeação |
+| | `CPF__pc` | Remove não numéricos, garante 11 dígitos, zeros à esquerda |
+| | `RecordTypeId` | `0125A0000013RxeQAE` |
+| | `AreaNegocio__c` | `Leves` |
+| | Operação | UPDATE opcional |
+| **Contract** | `Id` | Recebe ID da Conta |
+| | `AccountId` | Recebe os IDs informados (1 Account → 1 Contract) |
+| | `Status` | `Draft` |
+| | `IRIS_Categoria_Contrato__c` | `2` |
+| | Datas | Convertidas para `YYYY-MM-DD` |
+| | `IRIS_CapturaReservaPrimeiraParcela__c` | `TRUE` |
+| | `IRIS_ReservaPrimeiraParcela__c` | `TRUE` |
+| | `RecordTypeId` | `012U6000000OTnFIAW` |
+| | Operação | INSERT |
+| **Asset** | `Id` | Recebe ID da Conta |
+| | `AccountId` | Recebe os IDs informados (1 Account → 1 Asset) |
+| | Datas | Convertidas para `YYYY-MM-DD` |
+| | `RecordType.Name` → `RecordTypeId` | Renomeação |
+| | `RecordTypeId` | `012HY0000004NyFYAU` |
+| | Status | `Disponível` → `Locado`; `Alugado` → `Locado` |
+| | Operação | UPSERT via `Placa__c` |
+
+### 🔎 SOQL por CPF
+Localiza a aba `Account`/`Clientes`, usa o campo `CPF__pc`, remove não numéricos, padroniza para 11 dígitos, remove duplicidades e copia a consulta para a Área de Transferência.
+
+```sql
+SELECT Id, Name, CPF__pc
+FROM Account
+WHERE CPF__pc IN (...)
+ORDER BY Name
+```
 
 ---
 
 ## 🏢 Módulo Pessoa Jurídica
 
-<br>
-
-<table width="100%">
-
-<tr>
-
-<td width="50%" valign="top">
-
-### 📥 LEITURA DE PLANILHA
-
-<ul>
-
-<li>Importação Excel (.xlsx / .xls)</li>
-
-<li>Detecção automática:</li>
-
-<ul>
-<li>Contract</li>
-<li>Ativo</li>
-</ul>
-
-<li>Validação estrutural antes do processamento</li>
-<br>
-</ul>
-
-</td>
-
-<td width="50%" valign="top">
-
-### 🔗 VINCULAÇÃO AUTOMÁTICA
-
-<ul>
-
-<li>Relacionamento 1 Account → N Contracts</li>
-
-<li>Distribuição automática AccountId</li>
-
-<li>Validação Contract × Asset</li>
-
-<li>Preparado para MultiID futuro</li>
-
-</ul>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td width="50%" valign="top">
-
-### 🔄 TRANSFORMAÇÃO DE DADOS
-
-<ul>
-
-<li>Conversão automática de datas</li>
-
-<li>Tratamento ContractTerm</li>
-
-<li>Renomeação automática</li>
-
-<li>Conversões específicas PJ</li>
-
-</ul>
-
-</td>
-
-<td width="50%" valign="top">
-
-### 📤 EXPORTAÇÃO
-
-<ul>
-
-<li>Contract.csv</li>
-
-<li>Asset.csv</li>
-
-<li>Codificação UTF-8</li>
-
-<li>Pronto para Data Loader e Inspector</li>
-
-</ul>
-
-<br>
-</td>
-
-</tr>
-
-</table>
-
-## <br>📄 CONTRACT
-
-<ul>
-
-<li>Campo <b>Id</b> removido automaticamente</li>
-
-<li>Relacionamento automático:</li>
-
-<ul>
-<li><b>1 Account → N Contracts</b></li>
-</ul>
-
-<li>Campo <b>AccountId</b> distribuído automaticamente</li>
-
-<li>Campo <b>Status</b> fixado como <b>Draft</b></li>
-
-<li><b>IRIS_Categoria_Contrato__c</b> fixo:</li>
-
-<ul>
-<li>2</li>
-</ul>
-
-<li>Campos de data convertidos para:</li>
-
-<ul>
-<li>YYYY-MM-DD</li>
-</ul>
-
-<li><b>ContractTerm</b> tratado automaticamente</li>
-
-<li>Campos booleanos específicos:</li>
-
-<ul>
-
-<li>IRIS_CapturaReservaPrimeiraParcela__c = false</li>
-
-<li>IRIS_ReservaPrimeiraParcela__c = false</li>
-
-</ul>
-
-<li><b>RecordTypeId</b> fixo:</li>
-
-<ul>
-<li>012U6000009ru5eIAA</li>
-</ul>
-
-<li>Operação esperada:</li>
-
-<ul>
-<li><b>INSERT</b></li>
-</ul>
-
-</ul>
-
-## 🚗 ASSET
-
-<ul>
-
-<li>Campo <b>Id</b> removido automaticamente</li>
-
-<li>Campo <b>AccountId</b> vinculado automaticamente</li>
-
-<li>Campos de data convertidos para:</li>
-
-<ul>
-<li>YYYY-MM-DD</li>
-</ul>
-
-<li>Campo <b>RecordType.Name</b> convertido para <b>RecordTypeId</b></li>
-
-<li><b>RecordTypeId</b> fixo:</li>
-
-<ul>
-<li>012U6000009ru5JIAQ</li>
-</ul>
-
-<li>Operação esperada:</li>
-
-<ul>
-<li><b>UPSERT via Placa__c</b></li>
-</ul>
-
-</ul>
+### Leitura de planilha
+Importação **.xlsx / .xls** com abas obrigatórias `Account`, `Contract`, `Ativo`, com validação de abas.
+
+### Vinculação automática
+**1 Account → N Contracts** · **1 Account → N Assets** · distribuição automática de `AccountId` · validação Contract × Asset.
+
+### Transformação de dados
+Conversão de datas · tratamento de `ContractTerm` · renomeação de campos · aplicação de `RecordTypeId` · conversões específicas.
+
+### Exportação
+`Account.csv` · `Contract.csv` · `Asset.csv` — codificação UTF-8.
+
+### Regras por objeto
+
+| Objeto | Campo | Regra |
+|---|---|---|
+| **Account** | `Id` | Recebe o Account ID informado |
+| | `Email` → `Email__c` | Renomeação |
+| | `CPF__pc` | Tratamento específico |
+| | `RecordTypeId` | `0125A0000013RibQAE` |
+| | `AreaNegocio__c` | `Leves` |
+| **Contract** | `Id` | Recebe ID da Conta |
+| | `AccountId` | Distribuído automaticamente (1 Account → N Contracts) |
+| | `Status` | `Draft` |
+| | `IRIS_Categoria_Contrato__c` | `2` |
+| | Datas | Convertidas para `YYYY-MM-DD` |
+| | `ContractTerm` | Tratado automaticamente |
+| | Valor `0` | Convertido para vazio |
+| | `IRIS_CapturaReservaPrimeiraParcela__c` | `false` |
+| | `IRIS_ReservaPrimeiraParcela__c` | `false` |
+| | `RecordTypeId` | `012U6000009ru5eIAA` |
+| | Operação | INSERT |
+| **Asset** | `Id` | Recebe ID da Conta |
+| | `AccountId` | Distribuído automaticamente (1 Account → N Assets) |
+| | Datas | Convertidas para `YYYY-MM-DD` |
+| | `RecordType.Name` → `RecordTypeId` | Renomeação |
+| | `RecordTypeId` | `012U6000009ru5JIAQ` |
+| | Operação | UPSERT via `Placa__c` |
+
+### 🔍 Validação Contract × Asset
+Compara `IRIS_Contrato__r.IRIS_CodigoContratoMasterLocavia__c` com `IRIS_CodigoContratoMasterLocavia__c`. Se um Asset referenciar um contrato inexistente, o processamento é interrompido.
+
+### 🔧 Renomeações automáticas
+
+| Origem | Destino |
+|---|---|
+| `ContractNumber` | `_ContractNumber` |
+| `Account.Name` | `_Account.Name` |
+| `IDExternoAX__c` | `_IDExternoAX__c` |
+| `EndDate` | `_EndDate` |
+| `RecordType.DeveloperName` | `_RecordType.DeveloperName` |
+| `IRIS_Codigo_Status_do_Tanque__c` | `_IRIS_Codigo_Status_do_Tanque__c` |
+| `IRIS_Codigo_Situacao_do_Agendamento__c` | `_IRIS_Codigo_Situacao_do_Agendamento__c` |
+
+### 🔎 SOQL por CNPJ
+Opção **Gerar SOQL por CNPJ**: localiza a aba `Account`/`Clientes`, usa o campo `CPF__pc`, remove não numéricos, padroniza para 11 dígitos, remove duplicidades e copia para a Área de Transferência.
+
+> A interface apresenta a opção como CNPJ, porém o código atual utiliza o campo `CPF__pc`.
+
+### ⚠️ Status do Contract
+O programa gera `Status = Draft`. A conversão posterior de Draft para Ativo **não** é realizada pelo programa.
 
 ---
 
-## 🔍 VALIDAÇÃO CONTRACT × ASSET
+## 🔎 SOQL Generator
 
-O fluxo PJ valida automaticamente:
+Ferramenta independente para geração de consultas SOQL.
 
-<ul>
+| Passo | Ação |
+|---|---|
+| 1 | Inserir os IDs |
+| 2 | Definir o limite por consulta |
+| 3 | Clicar em **GERAR PARTES** |
+| 4 | Selecionar a parte desejada |
+| 5 | Copiar a consulta gerada |
 
-<li>IRIS_Contrato__r.IRIS_CodigoContratoMasterLocavia__c</li>
+**Recursos:** interface gráfica em Tkinter · IDs separados por espaços, vírgulas ou ponto e vírgula · limite configurável (padrão de 500 IDs) · divisão automática das consultas · botões individuais por parte · cópia automática para a Área de Transferência.
 
-<li>IRIS_CodigoContratoMasterLocavia__c</li>
-
-</ul>
-
-Caso Assets apontem contratos inexistentes o processamento é interrompido.
-
----
-
-## 🔧 RENOMEAÇÕES AUTOMÁTICAS
-
-Alguns campos são renomeados automaticamente para evitar conflitos ou bloqueios de atualização:
-
-<ul>
-
-<li>ContractNumber → _ContractNumber</li>
-
-<li>Account.Name → _Account.Name</li>
-
-<li>IDExternoAX__c → _IDExternoAX__c</li>
-
-<li>EndDate → _EndDate</li>
-
-<li>RecordType.DeveloperName → _RecordType.DeveloperName</li>
-
-<li>IRIS_Codigo_Status_do_Tanque__c → _IRIS_Codigo_Status_do_Tanque__c</li>
-
-<li>IRIS_Codigo_Situacao_do_Agendamento__c → _IRIS_Codigo_Situacao_do_Agendamento__c</li>
-
-</ul>
+**Consulta:** utiliza o objeto `Contract` e o relacionamento com `Opportunity`, com campos `IRIS_Opportunity__r.Id` e `Id`, filtrando e ordenando por `IRIS_Opportunity__r.Id`.
 
 ---
 
-# 🔎 SOQL Generator
+## 🔄 Update Contract Database
 
-Ferramenta independente para geração de consultas SOQL a partir de múltiplos IDs de Opportunity.
+Ferramenta independente para preparação de dados do objeto Contract.
 
-O programa divide automaticamente os IDs em partes conforme o limite informado e permite copiar cada consulta individualmente.
+| Passo | Ação |
+|---|---|
+| 1 | Selecionar o arquivo XLSX |
+| 2 | Processar a planilha |
+| 3 | Os dados são tratados automaticamente |
+| 4 | Uma aba `Salesforce` é criada |
+| 5 | O arquivo tratado é salvo |
 
-## 🚀 Como usar
+### De/Para de campos
 
-1. Colar os IDs das Opportunities.
-2. Informar o limite de IDs por consulta.
-3. Clicar em <b>GERAR PARTES</b>.
-4. Selecionar a <b>PARTE</b> desejada.
-5. A consulta será copiada para a <b>Área de Transferência</b>.
+| Origem | Salesforce |
+|--------|------------|
+| SF Id Contrato | `id` |
+| Locavia Data de início do contrato | `StartDate` |
+| Locavia Status Contrato | `Status` |
+| Data Cancelamento | `IRIS_DataCancelamento__c` |
 
-## ⚙️ Principais recursos
+Datas convertidas para `YYYY-MM-DD`.
 
-<ul>
+### Mapeamento de Status
 
-<li>Interface gráfica em <b>Tkinter</b></li>
+| Origem | Salesforce |
+|--------|------------|
+| Em Vigência | `Activated` |
+| Aberto | `Draft` |
+| Assinado | `Draft` |
+| Em Assinatura | `Draft` |
+| *(demais valores)* | Permanecem inalterados |
 
-<li>Suporte a IDs separados por espaços, vírgulas ou ponto e vírgula</li>
+A aba `Salesforce` gerada contém: `id`, `StartDate`, `Status`, `IRIS_DataCancelamento__c`.
 
-<li>Limite configurável por consulta</li>
+### Comparação com execução anterior
+Quando existe uma execução anterior, os registros são comparados pelo `id`, considerando `StartDate`, `Status` e `IRIS_DataCancelamento__c`. São apresentados: total de registros, novos registros e registros atualizados.
 
-<li>Limite padrão de <b>500 IDs</b></li>
+### Log
+Registrado em `log_atualizacoes.txt`: data da execução, total de registros, novos registros e registros atualizados.
 
-<li>Divisão automática das consultas</li>
-
-<li>Botões individuais para cada parte</li>
-
-<li>Cópia da consulta para a Área de Transferência</li>
-
-</ul> 
-
-## 📄 Consulta Gerada
-
-A consulta pesquisa o objeto <b>Contract</b> utilizando o relacionamento com Opportunity.
-
-<ul>
-
-<li><b>Objeto:</b> Contract</li>
-
-<li><b>Relacionamento:</b> IRIS_Opportunity__r</li>
-
-<li><b>Campos:</b> IRIS_Opportunity__r.Id e Id</li>
-
-<li><b>Filtro:</b> IRIS_Opportunity__r.Id IN (...)</li>
-
-<li><b>Ordenação:</b> IRIS_Opportunity__r.Id</li>
-
-</ul>
+### Arquivo de saída
+Salvo no formato `DD-MM-AAAA.xlsx`.
 
 ---
 
-# 🔄 Update Contract Database
-
-Ferramenta independente para preparar dados de contratos para atualização no Salesforce.
-
-O programa recebe uma planilha XLSX, trata os dados e cria uma aba <b>Salesforce</b>.
-
-## 🚀 Como usar
-
-1. Selecionar a planilha <b>XLSX</b>.
-2. O programa identifica a aba de origem.
-3. Os dados são tratados automaticamente.
-4. A aba <b>Salesforce</b> é criada.
-5. O arquivo é salvo na pasta do programa.
-6. Os dados tratados são copiados para a <b>Área de Transferência</b>.
-
-## 📥 LEITURA DE PLANILHA
-
-A aba de origem deve seguir o padrão:
-
-<b>AAAAMMDD - LIVRE - Dados Contra...</b>
-
-As colunas utilizadas são:
-
-<ul>
-
-<li><b>SF Id Contrato</b></li>
-
-<li><b>Locavia Data de início do contrato</b></li>
-
-<li><b>Locavia Status Contrato</b></li>
-
-<li><b>Data Cancelamento</b></li>
-
-</ul>
-
----
-
-## 🔄 TRANSFORMAÇÃO DE DADOS
-
-<table>
-
-<tr>
-<th>Origem</th>
-<th>Salesforce</th>
-</tr>
-
-<tr>
-<td>SF Id Contrato</td>
-<td><b>id</b></td>
-</tr>
-
-<tr>
-<td>Locavia Data de início do contrato</td>
-<td><b>StartDate</b></td>
-</tr>
-
-<tr>
-<td>Locavia Status Contrato</td>
-<td><b>Status</b></td>
-</tr>
-
-<tr>
-<td>Data Cancelamento</td>
-<td><b>IRIS_DataCancelamento__c</b></td>
-</tr>
-
-</table>
-
-### 📅 Datas
-
-As datas são convertidas para:
-
-<b>YYYY-MM-DD</b>
-
-Valores `NULL` ou vazios são tratados automaticamente.
-
-### 🔀 Status
-
-O programa realiza o seguinte de/para:
-
-<ul>
-
-<li><b>Em Vigência</b> → Activated</li>
-
-<li><b>Aberto</b> → Draft</li>
-
-<li><b>Assinado</b> → Draft</li>
-
-<li><b>Em Assinatura</b> → Draft</li>
-
-</ul>
-
-Valores não mapeados permanecem inalterados.
-
----
-
-## 📊 ABA SALESFORCE
-
-A aba gerada contém:
-
-<ul>
-
-<li><b>id</b></li>
-
-<li><b>StartDate</b></li>
-
-<li><b>Status</b></li>
-
-<li><b>IRIS_DataCancelamento__c</b></li>
-
-</ul>
-
----
-
-## 🔍 COMPARAÇÃO DE DADOS
-
-Caso exista uma execução anterior, o programa compara os dados pelo <b>id do contrato</b>.
-
-São apresentados:
-
-<ul>
-
-<li>Total de registros</li>
-
-<li>Novos registros</li>
-
-<li>Registros atualizados</li>
-
-</ul>
-
-A comparação considera:
-
-<ul>
-
-<li>StartDate</li>
-
-<li>Status</li>
-
-<li>IRIS_DataCancelamento__c</li>
-
-</ul>
-
----
-
-## 📝 LOG
-
-As comparações são registradas no arquivo:
-
-<b>log_atualizacoes.txt</b>
-
-O log registra a data, total de registros, novos registros e registros atualizados.
-
----
-
-## 📤 SAÍDA
-
-O arquivo é salvo no formato:
-
-<b>DD-MM-AAAA.xlsx</b>
-
-## Os dados tratados também são copiados para a <b>Área de Transferência</b> em formato compatível com o Excel.
-
-## 📦 Dependências
-
-### SOQL Generator
-
-<ul>
-
-<li><b>Python</b></li>
-
-<li><b>Tkinter</b></li>
-
-</ul>
-
-### Update Contract Database
-
-<ul>
-
-<li><b>Python</b></li>
-
-<li><b>Tkinter</b></li>
-
-<li><b>openpyxl</b></li>
-
-</ul>
-
-Para instalar o <b>openpyxl</b>:
-
-```bash
-pip install openpyxl
-```
+### 📦 Dependências
+
+| Ferramenta | Dependências |
+|---|---|
+| Data Import (PF/PJ) | Python · Tkinter · Pandas |
+| SOQL Generator | Python · Tkinter |
+| Update Contract Database | Python · Tkinter · openpyxl |
 
 ---
 
