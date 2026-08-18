@@ -27,9 +27,10 @@ Escolha a versão mais adequada para sua necessidade.
 | Versão | Descrição | Download |
 |--------|---------|----------|
 | **CSV Data Import 1.6.2.1** | **Pessoa Jurídica** | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.7/SF-DataImport_PF-PJ.rar"><b>Clique aqui</b></a> |
-| **CSV Data Import 1.6.3** | **Pessoa Física** *(mais recente)* | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.6.3/SF-DataImport_1.6.3-Multi.rar"><b>Clique aqui</b></a> |
+| **CSV Data Import 1.6.3** | **Pessoa Física** | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.6.3/SF-DataImport_1.6.3-Multi.rar"><b>Clique aqui</b></a> |
 | **SOQL Generator 1.0** | Gerador de sintaxe SOQL para pesquisa no objeto <br>OPPORTUNITY por múltiplos ids, com limite de <br>registros parametrizável por comando.| <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/SOQL.exe"><b>Clique aqui</b></a> |
 | **Update Contract Database 1.0** | Atualiza dados do objeto CONTRACT (Pessoa Física)<br>por Status, Data de Início e Data de Cancelamento.| <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/Update_Contract_PF.exe"><b>Clique aqui</b></a> |
+
 
 > A **versão 1.6.3** é destinada aos usuários que necessitam apenas da importação de **Pessoa Física (PF)**.
 >
