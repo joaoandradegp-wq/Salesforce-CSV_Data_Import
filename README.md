@@ -24,15 +24,18 @@ A suíte possui duas versões independentes:
 
 Escolha a versão mais adequada para sua necessidade.
 
-| Versão | Descrição | Download |
-|--------|---------|----------|
-| **CSV Data Import 1.7** | **PF 1.6.2 + PJ 1.7** | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.7/SF-DataImport_PF-PJ.rar"><b>Clique aqui</b></a> |
-| **CSV Data Import 1.6.3** | **Apenas PF** *(mais recente)* | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.6.3/SF-DataImport_1.6.3-Multi.rar"><b>Clique aqui</b></a> |
-| **SOQL Generator 1.0** | Gerador de sintaxe SOQL para pesquisa no objeto <br>OPPORTUNITY por múltiplos ids, com limite de <br>registros parametrizável por comando.| <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/SOQL.exe"><b>Clique aqui</b></a> |
+| Versão                           | Descrição                                                                                                | Download                                                                                                                                              |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **CSV Data Import 1.6.2.1**      | **Pessoa Jurídica**                                                                                      | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.7/SF-DataImport_PF-PJ.rar"><b>Clique aqui</b></a>         |
+| **CSV Data Import 1.6.3**        | **Pessoa Física**                                                                                        | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.6.3/SF-DataImport_1.6.3-Multi.rar"><b>Clique aqui</b></a> |
+| **SOQL Generator 1.0**           | Gerador de consultas SOQL para pesquisa no objeto <br>CONTRACT a partir de múltiplos IDs de Opportunity. | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/SOQL.exe"><b>Clique aqui</b></a>                        |
+| **Update Contract Database 1.0** | Tratamento e preparação de dados do objeto <br>CONTRACT para atualização no Salesforce.                  | <a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/Update_Contract_PF.exe"><b>Clique aqui</b></a>          |
 
 > A **versão 1.6.3** é destinada aos usuários que necessitam apenas da importação de **Pessoa Física (PF)**.
 >
 > O **SOQL Generator** é uma ferramenta opcional para geração de consultas SOQL e pode ser utilizada de forma independente.
+>
+> O **Update Contract Database** é uma ferramenta opcional para tratamento e preparação de dados de contratos e pode ser utilizada de forma independente.
 
 ---
 
@@ -40,10 +43,11 @@ Escolha a versão mais adequada para sua necessidade.
 <tr>
 
 <td width="50%" valign="top">
-  
+
 ## 👤 PF - Pessoa Física
 
 Fluxo voltado para atualização e higienização de dados de clientes Pessoa Física.
+
 ### Objetos processados
 
 <ul>
@@ -65,7 +69,7 @@ Fluxo voltado para atualização e higienização de dados de clientes Pessoa F�
 </td>
 
 <td width="50%" valign="top">
-  
+
 ## 🏢 PJ - Pessoa Jurídica
 
 Fluxo voltado para operações corporativas e gestão de contratos PJ.
@@ -99,7 +103,7 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 1. Inserir Account IDs da ORG, baseado no CPF/CNPJ.
 2. Anexar Excel.
 3. Clicar em <b>Processar CSV</b>.
-4. Clicar nos botões que representam os objetos (Account/Contract/Asset)
+4. Clicar nos botões que representam os objetos (Account/Contract/Asset).
 5. O CSV vai estar copiado na <b>Área de Transferência</b> (CTRL+C).
 6. Abrir o <b>Data Import</b> do Salesforce Inspector ou no Data Loader.
 7. Colar o que foi copiado (CTRL+V).
@@ -108,7 +112,9 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 ---
 
 ## 👤 Módulo Pessoa Física
+
 <br>
+
 <table width="100%">
 
 <tr>
@@ -199,8 +205,6 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 </table>
 
-
-
 ## <br>🧾 ACCOUNT
 
 <ul>
@@ -234,8 +238,6 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 </ul>
 
 </ul>
-
-
 
 ## 📄 CONTRACT
 
@@ -273,8 +275,6 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 </ul>
 
-
-
 ## 🚗 ASSET
 
 <ul>
@@ -298,7 +298,7 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 <li><b>Conversão de Status para valores válidos</b>:</li>
 
 <ul>
-<li>"<b>Disponível</b>" e "<b>Alugado</b>", será substituído por "<b>Locado</b>"</li>
+<li>"<b>Disponível</b>" e "<b>Alugado</b>" serão substituídos por "<b>Locado</b>"</li>
 </ul>
 
 <li>Operação esperada:</li>
@@ -312,7 +312,9 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 ---
 
 ## 🏢 Módulo Pessoa Jurídica
+
 <br>
+
 <table width="100%">
 
 <tr>
@@ -393,13 +395,13 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 <li>Pronto para Data Loader e Inspector</li>
 
 </ul>
+
 <br>
 </td>
 
 </tr>
 
 </table>
-
 
 ## <br>📄 CONTRACT
 
@@ -410,9 +412,7 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 <li>Relacionamento automático:</li>
 
 <ul>
-
 <li><b>1 Account → N Contracts</b></li>
-
 </ul>
 
 <li>Campo <b>AccountId</b> distribuído automaticamente</li>
@@ -457,8 +457,6 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 
 </ul>
 
-
-
 ## 🚗 ASSET
 
 <ul>
@@ -486,6 +484,7 @@ Fluxo voltado para operações corporativas e gestão de contratos PJ.
 <ul>
 <li><b>UPSERT via Placa__c</b></li>
 </ul>
+
 </ul>
 
 ---
@@ -530,6 +529,254 @@ Alguns campos são renomeados automaticamente para evitar conflitos ou bloqueios
 
 ---
 
+# 🔎 SOQL Generator
+
+Ferramenta independente para geração de consultas SOQL a partir de múltiplos IDs de Opportunity.
+
+O programa divide automaticamente os IDs em partes conforme o limite informado e permite copiar cada consulta individualmente.
+
+## 🚀 Como usar
+
+1. Colar os IDs das Opportunities.
+2. Informar o limite de IDs por consulta.
+3. Clicar em <b>GERAR PARTES</b>.
+4. Selecionar a <b>PARTE</b> desejada.
+5. A consulta será copiada para a <b>Área de Transferência</b>.
+
+## ⚙️ Principais recursos
+
+<ul>
+
+<li>Interface gráfica em <b>Tkinter</b></li>
+
+<li>Suporte a IDs separados por espaços, vírgulas ou ponto e vírgula</li>
+
+<li>Limite configurável por consulta</li>
+
+<li>Limite padrão de <b>500 IDs</b></li>
+
+<li>Divisão automática das consultas</li>
+
+<li>Botões individuais para cada parte</li>
+
+<li>Cópia da consulta para a Área de Transferência</li>
+
+</ul> 
+
+## 📄 Consulta Gerada
+
+A consulta pesquisa o objeto <b>Contract</b> utilizando o relacionamento com Opportunity.
+
+<ul>
+
+<li><b>Objeto:</b> Contract</li>
+
+<li><b>Relacionamento:</b> IRIS_Opportunity__r</li>
+
+<li><b>Campos:</b> IRIS_Opportunity__r.Id e Id</li>
+
+<li><b>Filtro:</b> IRIS_Opportunity__r.Id IN (...)</li>
+
+<li><b>Ordenação:</b> IRIS_Opportunity__r.Id</li>
+
+</ul>
+
+---
+
+# 🔄 Update Contract Database
+
+Ferramenta independente para preparar dados de contratos para atualização no Salesforce.
+
+O programa recebe uma planilha XLSX, trata os dados e cria uma aba <b>Salesforce</b>.
+
+## 🚀 Como usar
+
+1. Selecionar a planilha <b>XLSX</b>.
+2. O programa identifica a aba de origem.
+3. Os dados são tratados automaticamente.
+4. A aba <b>Salesforce</b> é criada.
+5. O arquivo é salvo na pasta do programa.
+6. Os dados tratados são copiados para a <b>Área de Transferência</b>.
+
+## 📥 LEITURA DE PLANILHA
+
+A aba de origem deve seguir o padrão:
+
+<b>AAAAMMDD - LIVRE - Dados Contra...</b>
+
+As colunas utilizadas são:
+
+<ul>
+
+<li><b>SF Id Contrato</b></li>
+
+<li><b>Locavia Data de início do contrato</b></li>
+
+<li><b>Locavia Status Contrato</b></li>
+
+<li><b>Data Cancelamento</b></li>
+
+</ul>
+
+---
+
+## 🔄 TRANSFORMAÇÃO DE DADOS
+
+<table>
+
+<tr>
+<th>Origem</th>
+<th>Salesforce</th>
+</tr>
+
+<tr>
+<td>SF Id Contrato</td>
+<td><b>id</b></td>
+</tr>
+
+<tr>
+<td>Locavia Data de início do contrato</td>
+<td><b>StartDate</b></td>
+</tr>
+
+<tr>
+<td>Locavia Status Contrato</td>
+<td><b>Status</b></td>
+</tr>
+
+<tr>
+<td>Data Cancelamento</td>
+<td><b>IRIS_DataCancelamento__c</b></td>
+</tr>
+
+</table>
+
+### 📅 Datas
+
+As datas são convertidas para:
+
+<b>YYYY-MM-DD</b>
+
+Valores `NULL` ou vazios são tratados automaticamente.
+
+### 🔀 Status
+
+O programa realiza o seguinte de/para:
+
+<ul>
+
+<li><b>Em Vigência</b> → Activated</li>
+
+<li><b>Aberto</b> → Draft</li>
+
+<li><b>Assinado</b> → Draft</li>
+
+<li><b>Em Assinatura</b> → Draft</li>
+
+</ul>
+
+Valores não mapeados permanecem inalterados.
+
+---
+
+## 📊 ABA SALESFORCE
+
+A aba gerada contém:
+
+<ul>
+
+<li><b>id</b></li>
+
+<li><b>StartDate</b></li>
+
+<li><b>Status</b></li>
+
+<li><b>IRIS_DataCancelamento__c</b></li>
+
+</ul>
+
+---
+
+## 🔍 COMPARAÇÃO DE DADOS
+
+Caso exista uma execução anterior, o programa compara os dados pelo <b>id do contrato</b>.
+
+São apresentados:
+
+<ul>
+
+<li>Total de registros</li>
+
+<li>Novos registros</li>
+
+<li>Registros atualizados</li>
+
+</ul>
+
+A comparação considera:
+
+<ul>
+
+<li>StartDate</li>
+
+<li>Status</li>
+
+<li>IRIS_DataCancelamento__c</li>
+
+</ul>
+
+---
+
+## 📝 LOG
+
+As comparações são registradas no arquivo:
+
+<b>log_atualizacoes.txt</b>
+
+O log registra a data, total de registros, novos registros e registros atualizados.
+
+---
+
+## 📤 SAÍDA
+
+O arquivo é salvo no formato:
+
+<b>DD-MM-AAAA.xlsx</b>
+
+## Os dados tratados também são copiados para a <b>Área de Transferência</b> em formato compatível com o Excel.
+
+## 📦 Dependências
+
+### SOQL Generator
+
+<ul>
+
+<li><b>Python</b></li>
+
+<li><b>Tkinter</b></li>
+
+</ul>
+
+### Update Contract Database
+
+<ul>
+
+<li><b>Python</b></li>
+
+<li><b>Tkinter</b></li>
+
+<li><b>openpyxl</b></li>
+
+</ul>
+
+Para instalar o <b>openpyxl</b>:
+
+```bash
+pip install openpyxl
+```
+
+---
+
 <p align="center">
-Automatizando higienização e preparação de dados para cargas Salesforce. ☁️
+Automatizando higienização, preparação, consulta e atualização de dados para cargas Salesforce. ☁️
 </p>
