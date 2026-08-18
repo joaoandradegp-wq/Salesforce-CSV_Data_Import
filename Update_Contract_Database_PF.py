@@ -5,12 +5,15 @@ Atualizador Salesforce
 -----------------------
 Le uma planilha XLSX contendo uma aba no formato "AAAAMMDD - LIVRE - Dados Contra...",
 seleciona e transforma colunas especificas, cria uma nova aba "Salesforce",
-salva o resultado na pasta raiz do programa e copia os dados tratados para
-a area de transferencia (formato compativel com colar no Excel).
+salva o resultado e copia os dados tratados para a area de transferencia
+(formato compativel com colar no Excel).
 
-Se ja existir na pasta raiz uma planilha de uma execucao anterior, o programa
-compara os dados antes de salvar, mostra o resultado na tela e grava um log
-em TXT (auto-incremental, um unico arquivo).
+As planilhas geradas ficam em "Contract/Data" (a partir da pasta do programa)
+e o log incremental fica em "Contract/log_atualizacoes.txt".
+
+Se ja existir em "Contract/Data" uma planilha de uma execucao anterior, o
+programa compara os dados antes de salvar, mostra o resultado na tela e
+grava uma linha no log.
 
 Requisitos:
     pip install openpyxl
@@ -24,7 +27,7 @@ import traceback
 from datetime import datetime, date
 
 import tkinter as tk
-from tkinter import filedialog, messagebox, scrolledtext
+from tkinter import filedialog, messagebox, scrolledtext, ttk
 
 try:
     import openpyxl
@@ -158,9 +161,12 @@ def find_source_sheet(wb):
     return None
 
 
-def read_and_process_source(ws):
+def read_and_process_source(ws, progress_callback=None):
     """Le a aba de origem inteira e retorna a lista de linhas processadas
-    (lista de dicts na ordem TARGET_HEADERS)."""
+    (lista de dicts na ordem TARGET_HEADERS).
+
+    progress_callback(fracao), se informado, e chamado periodicamente com
+    um valor entre 0.0 e 1.0 indicando o andamento da leitura."""
 
     rows = list(ws.iter_rows(values_only=True))
     if not rows:
@@ -182,10 +188,16 @@ def read_and_process_source(ws):
 
     col_positions = [header_index[c] for c in SOURCE_COLUMNS]
 
+    data_rows = rows[1:]
+    total = len(data_rows)
+    step = max(total // 100, 1)  # atualiza a cada ~1% para nao travar a UI
+
     processed = []
-    for data_row in rows[1:]:
+    for i, data_row in enumerate(data_rows, start=1):
         # ignora linhas totalmente vazias
         if data_row is None or all(v is None for v in data_row):
+            if progress_callback and (i % step == 0 or i == total):
+                progress_callback(i / total if total else 1.0)
             continue
 
         raw_values = []
@@ -201,6 +213,9 @@ def read_and_process_source(ws):
             "IRIS_DataCancelamento__c": format_date(cancel_date),
         }
         processed.append(item)
+
+        if progress_callback and (i % step == 0 or i == total):
+            progress_callback(i / total if total else 1.0)
 
     return processed
 
@@ -234,14 +249,17 @@ def build_output_filename(source_filename):
 # Comparacao com execucao anterior
 # ----------------------------------------------------------------------
 
-def find_previous_output(root_dir, exclude_filename=None):
-    """Procura na pasta raiz por arquivos gerados em execucoes anteriores
-    (padrao DD-MM-AAAA.xlsx) e retorna o caminho do mais recente."""
+def find_previous_output(data_dir):
+    """Procura na pasta de dados (Contract/Data) por arquivos gerados em
+    execucoes anteriores (padrao DD-MM-AAAA.xlsx) e retorna o caminho do
+    mais recente, com base na data contida no proprio nome do arquivo.
+
+    Nao ha exclusao por nome: se ja existir um arquivo com o mesmo nome do
+    que sera gerado agora (reprocessamento do mesmo dia), ele deve mesmo
+    assim ser considerado a execucao anterior para fins de comparacao."""
     candidates = []
-    for path in glob.glob(os.path.join(root_dir, "*.xlsx")):
+    for path in glob.glob(os.path.join(data_dir, "*.xlsx")):
         name = os.path.basename(path)
-        if exclude_filename and name.lower() == exclude_filename.lower():
-            continue
         m = OUTPUT_NAME_PATTERN.match(name)
         if not m:
             continue
@@ -325,8 +343,8 @@ def compare_data(current_rows, previous_data):
     return total, novos, atualizados
 
 
-def write_log(root_dir, ref_date, total, novos, atualizados):
-    log_path = os.path.join(root_dir, LOG_FILENAME)
+def write_log(log_dir, ref_date, total, novos, atualizados):
+    log_path = os.path.join(log_dir, LOG_FILENAME)
     now = datetime.now()
     linha = (
         f"[{now.strftime('%d/%m/%Y %H:%M:%S')}] "
@@ -342,14 +360,19 @@ def write_log(root_dir, ref_date, total, novos, atualizados):
 # Escrita da nova aba / salvamento
 # ----------------------------------------------------------------------
 
-def write_salesforce_sheet(wb, processed_rows):
+def write_salesforce_sheet(wb, processed_rows, progress_callback=None):
     if "Salesforce" in wb.sheetnames:
         del wb["Salesforce"]
     ws = wb.create_sheet("Salesforce")
 
     ws.append(TARGET_HEADERS)
-    for item in processed_rows:
+
+    total = len(processed_rows)
+    step = max(total // 100, 1)
+    for i, item in enumerate(processed_rows, start=1):
         ws.append([item[h] for h in TARGET_HEADERS])
+        if progress_callback and (i % step == 0 or i == total):
+            progress_callback(i / total if total else 1.0)
 
     # ajusta largura das colunas de forma simples
     for i, header in enumerate(TARGET_HEADERS, start=1):
@@ -413,6 +436,22 @@ class App:
         )
         self.btn_load.pack()
 
+        progress_frame = tk.Frame(root)
+        progress_frame.pack(fill=tk.X, padx=15, pady=(10, 0))
+
+        self.progress_var = tk.DoubleVar(value=0.0)
+        self.progress_bar = ttk.Progressbar(
+            progress_frame,
+            orient="horizontal",
+            mode="determinate",
+            maximum=100,
+            variable=self.progress_var,
+        )
+        self.progress_bar.pack(fill=tk.X, side=tk.LEFT, expand=True)
+
+        self.progress_label = tk.Label(progress_frame, text="0%", width=6, font=("Segoe UI", 9))
+        self.progress_label.pack(side=tk.LEFT, padx=(8, 0))
+
         self.log_area = scrolledtext.ScrolledText(
             root, wrap=tk.WORD, font=("Consolas", 10), height=20
         )
@@ -420,7 +459,13 @@ class App:
         self.log_area.configure(state=tk.DISABLED)
 
         self.root_dir = get_root_dir()
+        self.log_dir = os.path.join(self.root_dir, "Contract")
+        self.data_dir = os.path.join(self.log_dir, "Data")
+        os.makedirs(self.data_dir, exist_ok=True)
+
         self.log(f"Pasta raiz do programa: {self.root_dir}")
+        self.log(f"Planilhas serao salvas em: {self.data_dir}")
+        self.log(f"Log sera salvo em: {self.log_dir}")
 
     def log(self, message):
         self.log_area.configure(state=tk.NORMAL)
@@ -428,6 +473,20 @@ class App:
         self.log_area.see(tk.END)
         self.log_area.configure(state=tk.DISABLED)
         self.root.update_idletasks()
+
+    def set_progress(self, value):
+        """Atualiza a barra de progresso. value vai de 0 a 100."""
+        value = max(0.0, min(100.0, value))
+        self.progress_var.set(value)
+        self.progress_label.configure(text=f"{int(value)}%")
+        self.root.update_idletasks()
+
+    def make_stage_callback(self, start, end):
+        """Retorna uma funcao que recebe uma fracao (0.0-1.0) e mapeia
+        para o intervalo [start, end] da barra de progresso."""
+        def callback(fraction):
+            self.set_progress(start + (end - start) * fraction)
+        return callback
 
     def on_load_clicked(self):
         file_path = filedialog.askopenfilename(
@@ -438,20 +497,25 @@ class App:
             return
 
         self.btn_load.configure(state=tk.DISABLED)
+        self.set_progress(0)
         try:
             self.process_file(file_path)
         except Exception as exc:
             traceback.print_exc()
             messagebox.showerror("Erro", str(exc))
             self.log(f"ERRO: {exc}")
+            self.set_progress(0)
         finally:
             self.btn_load.configure(state=tk.NORMAL)
 
     def process_file(self, file_path):
         self.log("")
         self.log(f"Arquivo selecionado: {os.path.basename(file_path)}")
+        self.set_progress(0)
 
+        # --- Carregar workbook (0-10%) ---
         wb = openpyxl.load_workbook(file_path, data_only=True)
+        self.set_progress(10)
 
         sheet_name = find_source_sheet(wb)
         if sheet_name is None:
@@ -460,38 +524,55 @@ class App:
                 "'AAAAMMDD - LIVRE - Dados Contra...' dentro da planilha."
             )
         self.log(f"Aba de origem identificada: {sheet_name}")
+        self.set_progress(15)
 
+        # --- Leitura e processamento das linhas (15-55%) ---
         ws = wb[sheet_name]
-        processed_rows = read_and_process_source(ws)
+        processed_rows = read_and_process_source(
+            ws, progress_callback=self.make_stage_callback(15, 55)
+        )
+        self.set_progress(55)
         self.log(f"Registros lidos e tratados: {len(processed_rows)}")
 
         output_filename, ref_date = build_output_filename(os.path.basename(file_path))
-        output_path = os.path.join(self.root_dir, output_filename)
+        output_path = os.path.join(self.data_dir, output_filename)
 
-        # --- Comparacao com execucao anterior (se existir) ---
-        previous_path = find_previous_output(self.root_dir, exclude_filename=output_filename)
+        # --- Comparacao com execucao anterior (55-65%) e gravacao do log (sempre) ---
+        previous_path = find_previous_output(self.data_dir)
         if previous_path:
             self.log(f"Planilha de execucao anterior encontrada: {os.path.basename(previous_path)}")
             previous_data = load_previous_data(previous_path)
             total, novos, atualizados = compare_data(processed_rows, previous_data)
-            log_line = write_log(self.root_dir, ref_date, total, novos, atualizados)
             self.log("Comparacao concluida:")
-            self.log(f"  - Total de registros: {total}")
-            self.log(f"  - Novos registros: {novos}")
-            self.log(f"  - Registros atualizados: {atualizados}")
-            self.log(f"Log gravado em: {LOG_FILENAME}")
-            self.log(log_line.strip())
         else:
-            self.log("Nenhuma execucao anterior encontrada na pasta raiz (primeira execucao).")
+            self.log("Nenhuma execucao anterior encontrada em Contract\\Data (primeira execucao).")
+            total = len(processed_rows)
+            novos = total
+            atualizados = 0
 
-        # --- Criacao da aba Salesforce e salvamento ---
-        write_salesforce_sheet(wb, processed_rows)
+        log_line = write_log(self.log_dir, ref_date, total, novos, atualizados)
+        self.log(f"  - Total de registros: {total}")
+        self.log(f"  - Novos registros: {novos}")
+        self.log(f"  - Registros atualizados: {atualizados}")
+        self.log(f"Log gravado em: {LOG_FILENAME}")
+        self.log(log_line.strip())
+        self.set_progress(65)
+
+        # --- Criacao da aba Salesforce (65-85%) ---
+        write_salesforce_sheet(
+            wb, processed_rows, progress_callback=self.make_stage_callback(65, 85)
+        )
+        self.set_progress(85)
+
+        # --- Salvamento (85-95%) ---
         wb.save(output_path)
         self.log(f"Planilha salva em: {output_path}")
+        self.set_progress(95)
 
-        # --- Copia para a area de transferencia ---
+        # --- Copia para a area de transferencia (95-100%) ---
         copy_rows_to_clipboard(self.root, processed_rows)
         self.log("Dados copiados para a area de transferencia.")
+        self.set_progress(100)
 
         messagebox.showinfo(
             "Concluido",
