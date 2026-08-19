@@ -3,6 +3,12 @@ from tkinter import messagebox
 import re
 import math
 
+# ==================== VARIÁVEIS GLOBAIS ====================
+
+versao = "1.0"
+
+# ===========================================================
+
 soql_partes = []
 
 def gerar_partes():
@@ -78,7 +84,7 @@ def copiar_parte(indice):
 # =============================
 
 root = tk.Tk()
-root.title("Gerador de Pesquisa SOQL 1.0 - Oportunidades - Aggrandize - João Márcio Bicalho Andrade")
+root.title("SOQL Generator "+versao+" - Aggrandize - João Márcio Bicalho Andrade")
 root.geometry("750x550")
 
 tk.Label(root, text="Cole os IDs das Oportunidades:").pack(pady=5)

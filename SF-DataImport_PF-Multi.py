@@ -8,7 +8,7 @@ import os
 caminho_arquivo = None
 pasta_saida = None
 processado = False
-versao = "1.6.3 - Multi - LIVRE"
+versao = "LIVRE - 1.6.3 - Multi"
 
 # ==================== FUNÇÕES DE UTILIDADE ====================
 
@@ -352,7 +352,7 @@ def processar_planilha():
 # ==================== INTERFACE ====================
 
 root = tk.Tk()
-root.title("Conversor de Planilha para Importação via CSV "+versao+" - Aggrandize - João Márcio Bicalho Andrade")
+root.title("Data Import "+versao+" - Aggrandize - João Márcio Bicalho Andrade")
 centralizar_janela(root, 700, 450)
 root.protocol("WM_DELETE_WINDOW", ao_fechar)
 

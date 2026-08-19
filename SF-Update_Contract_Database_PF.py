@@ -1,23 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Atualizador Salesforce
------------------------
-Le uma planilha XLSX contendo uma aba no formato "AAAAMMDD - LIVRE - Dados Contra...",
-seleciona e transforma colunas especificas, cria uma nova aba "Salesforce",
-salva o resultado e copia os dados tratados para a area de transferencia
-(formato compativel com colar no Excel).
-
-As planilhas geradas ficam em "Contract/Data" (a partir da pasta do programa)
-e o log incremental fica em "Contract/log_atualizacoes.txt".
-
-Se ja existir em "Contract/Data" uma planilha de uma execucao anterior, o
-programa compara os dados antes de salvar, mostra o resultado na tela e
-grava uma linha no log.
-
-Requisitos:
-    pip install openpyxl
-"""
 
 import os
 import re
@@ -28,6 +10,12 @@ from datetime import datetime, date
 
 import tkinter as tk
 from tkinter import filedialog, messagebox, scrolledtext, ttk
+
+# ==================== VARIÁVEIS GLOBAIS ====================
+
+versao = "1.0.1"
+
+# ===========================================================
 
 try:
     import openpyxl
@@ -405,7 +393,7 @@ def copy_rows_to_clipboard(root, processed_rows):
 class App:
     def __init__(self, root):
         self.root = root
-        self.root.title("Atualizador Salesforce")
+        self.root.title("Update Contract Database "+versao+") - Aggrandize - João Márcio Bicalho Andrade")
         self.root.geometry("720x480")
         self.root.resizable(True, True)
 
@@ -577,7 +565,7 @@ class App:
         messagebox.showinfo(
             "Concluido",
             "Base copiada para a área de transferência (CTRL+C) "
-            "para ser colada via DataImport",
+            "para ser colada (CTRL+V) via DataImport",
         )
 
 
