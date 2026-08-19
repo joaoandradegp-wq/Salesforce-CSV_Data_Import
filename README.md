@@ -23,10 +23,10 @@ A suíte possui duas versões independentes: <b>PF (Pessoa Física)</b> e <b>PJ 
 
 | Versão | Módulo | Descrição | Download |
 |--------|--------|-----------|----------|
-| 1.6.3 | PF | Pessoa Física | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.6.3/SF-DataImport_1.6.3-Multi.rar) |
-| 1.6.2.1 | PJ | Pessoa Jurídica | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.7/SF-DataImport_PF-PJ.rar) |
-| 1.0 | SOQL Generator | Gerador de consultas SOQL por múltiplos IDs | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/SOQL.exe) |
-| 1.0 | Update Contract Database | Preparação de dados para atualização de Contracts | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/Update_Contract_PF.exe) |
+| 1.6.3 | PF | Pessoa Física | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.6.3/SF-DataImport_PF-Multi.exe) |
+| 1.6.2.1 | PJ | Pessoa Jurídica | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.6.2.1/SF-DataImport_PJ.exe) |
+| 1.0 | SOQL Generator | Gerador de consultas SOQL por múltiplos IDs | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/SF-SOQL_Generator.exe) |
+| 1.0 | Update Contract Database | Preparação de dados para atualização de Contracts | [Clique aqui](https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0.1/SF-Update_Contract_Database_PF.exe) |
 
 > **SOQL Generator** e **Update Contract Database** são ferramentas independentes.
 
