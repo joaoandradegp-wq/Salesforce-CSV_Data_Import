@@ -393,7 +393,7 @@ def copy_rows_to_clipboard(root, processed_rows):
 class App:
     def __init__(self, root):
         self.root = root
-        self.root.title("Update Contract Database "+versao+") - Aggrandize - João Márcio Bicalho Andrade")
+        self.root.title("Update Contract Database "+versao+" - Aggrandize - João Márcio Bicalho Andrade")
         self.root.geometry("720x480")
         self.root.resizable(True, True)
 
