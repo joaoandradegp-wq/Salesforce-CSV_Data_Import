@@ -334,21 +334,6 @@ FROM Asset
 WHERE Placa__c IN ('ABC1234','DEF5678')
 ORDER BY CreatedDate DESC</code></pre>
 
-<h3>📌 Comportamento e limitações</h3>
-<ul>
-  <li>Cada objeto possui uma configuração própria de campos e filtro.</li>
-  <li>O limite informado determina quantos valores serão incluídos em cada consulta.</li>
-  <li>Cada parte é gerada como uma consulta independente e pode ser copiada individualmente.</li>
-  <li>A ferramenta não executa as consultas e não estabelece conexão direta com o Salesforce.</li>
-  <li>Os valores são tratados como strings delimitadas por aspas simples.</li>
-  <li>Não há remoção automática de valores duplicados.</li>
-  <li>Não há tratamento específico de aspas simples presentes nos valores informados.</li>
-  <li>O programa não valida se os IDs ou valores existem na organização Salesforce.</li>
-</ul>
-
-<p><strong>Versão do código:</strong> 1.1</p>
-<p><strong>Dependências:</strong> Python · Tkinter</p>
-
 ---
 
 <h2>🔄 Update Contract Database</h2>
