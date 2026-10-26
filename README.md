@@ -46,7 +46,7 @@
       <td>1.1</td>
       <td>SOQL Generator</td>
       <td>Geração de consultas SOQL por múltiplos IDs ou valores</td>
-      <td><a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.0/SF-SOQL_Generator.exe">Clique aqui</a></td>
+      <td><a href="https://github.com/joaoandradegp-wq/Salesforce-CSV_Data_Import/releases/download/1.1/SF-SOQL_Generator1.1.exe">Clique aqui</a></td>
     </tr>
     <tr>
       <td>1.0.1</td>
