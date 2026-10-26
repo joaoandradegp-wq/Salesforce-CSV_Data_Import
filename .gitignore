@@ -3,3 +3,4 @@ Contract/log_atualizacoes.txt
 /build
 /dist
 *.spec
+/state
